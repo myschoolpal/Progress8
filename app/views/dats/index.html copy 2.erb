@@ -1,0 +1,116 @@
+<%for i in 0..@details_c.length-1%>
+	<%=@details_c[i]%>
+<%end%>
+<%for i in 0..@ma_eng_c.length-1%>
+	<%=@ma_eng_c[i]%>
+<%end%>
+<%for i in 0..@ebacc_c.length-1%>
+	<%=@ebacc_c[i]%>
+<%end%>
+<%for i in 0..@voc_c.length-1%>
+	<%=@voc_c[i]%>
+<%end%>
+Maths P8
+		English P8
+		Ebacc
+		Other
+		Expected A8
+		Attainment 8
+		Progress 8
+		Value Added
+		
+		
+<%for j in 0..@data.length-1%>
+	<%num = ""%>
+	<%num_ebacc = ""%>
+	<%num_other =""%>
+	<%for i in 0..@details_c.length-1%>			
+		<%if @details_c[i].upcase == "ENGLISH_KS2_FINE"%>
+			<%=ks2_maths_fine = @data[j][@details_c[i]].to_f%>
+		<%elsif @details_c[i].upcase == "MATHS_KS2_FINE"%>
+			<%=ks2_eng_fine = @data[j][@details_c[i]].to_f%>
+		<%else%>
+			<%=@data[j][@details_c[i]]%>
+		<%end%>
+	<%end%>
+	<%if ks2_maths_fine && ks2_eng_fine%>
+		<%=average_ks2=((ks2_maths_fine+ks2_eng_fine)/2).round(1)%>
+	<%end%>
+
+	<%for i in 0..@ma_eng_c.length-1%>
+		<%=grade = @data[j][@ma_eng_c[i]]%>
+		<%=num = @grade_number[grade]%>
+		<%if @ma_eng_c[i] == "Maths_Result"%>
+			<%maths_num = num%> 
+		<%end%>
+		<%if @ma_eng_c[i] == "English_Language_Result"%>
+			<%eng_lang_num = num%> 
+		<%end%>
+		<%if @ma_eng_c[i] == "English_Literature_Result"%>
+			<%eng_lit_num = num%> 
+		<%end%>
+	<%end%>
+
+	<%ebacc_num = []%>
+	<%for i in 0..@ebacc_c.length-1%>
+		<%=grade = @data[j][@ebacc_c[i]]%>
+		<%if num_ebacc = @grade_number[grade]%>
+			<%=num_ebacc%>
+		<%end%>
+		<%if num_ebacc%>
+			<%ebacc_num.push(num_ebacc)%>
+		<%end%>
+	<%end%>
+
+	<%other_num = []%>
+	<%for i in 0..@voc_c.length-1%>
+		<%=grade = @data[j][@voc_c[i]]%>
+		<%if grade%>
+			<%if @btec_score[grade.upcase]%>
+				<%if @voc_c[i].upcase.include? "L2N"%>
+					<%if  @voc_c[i].upcase.include? "LEVEL1"%>
+						<%num_other = @l2n_1_score[grade.upcase]%>
+					<%elsif @voc_c[i].upcase.include? "LEVEL2"%>
+						<%num_other = @l2n_2_score[grade.upcase]%>
+					<%end%>
+				<%elsif @voc_c[i].upcase.include? "BTEC"%>
+					<%if  @voc_c[i].upcase.include? "LEVEL1"%>
+						<%if grade.upcase.include? "PASS"%>
+							<%num_other = 2%>
+						<%end%>
+					<%elsif @voc_c[i].upcase.include? "LEVEL2"%>
+						<%num_other = @btec_score[grade.upcase]%>
+					<%end%>
+				<%end%>
+			<%else%>
+				<% num_other = @grade_number[grade]%>
+			<%end%>
+		<%end%>
+		<%=num_other%>						
+		<%if num_other%>
+			<%other_num.push(num_other.to_i)%>
+		<%end%>	
+	<%end%>
+	<%=maths_part = maths_num*2%>	
+	<%if eng_lang_num && eng_lit_num%>
+		<%=eng_part = 2*([eng_lang_num, eng_lit_num].max)%>
+	<%elsif eng_lang_num%>
+		<%=eng_part = eng_lang_num%>
+	<%end%>
+	<%=second_part = ebacc_num.sort.last(3).inject{|sum,x| sum + x }%>
+			 
+	<%if eng_lit_num%>
+		<%other_num.push(eng_lit_num)%>
+	<%end%>
+	<%=third_part = other_num.sort.last(3).inject{|sum,x| sum + x }%>
+	<%=expect_a8=@ks2_e_a8[average_ks2]%>
+			 
+	<%attainment8 = (maths_part + eng_part + second_part + third_part).to_f%>
+	<%=attainment8%>
+	 <%if attainment8 && expect_a8%>
+		<%=progress8 =attainment8-expect_a8%>
+	 <%end%>
+	<%if progress8%>
+		<%=va = progress8/10%>
+	<%end%>		
+<%end%>

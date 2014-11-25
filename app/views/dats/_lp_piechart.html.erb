@@ -1,0 +1,196 @@
+<%require 'descriptive_statistics'%>
+
+<%lp_array = []%>
+<%lp_count = []%>
+<%axis_x = []%>
+<%lp_a = []%>
+<%if d%>
+	<%for i in 0..d.length-1%>
+		<%if d[i]['lp']%>
+			<%lp_array << d[i]['lp'].to_i%>
+			<%lp_a << d[i]['lp']%>
+		<%end%>
+	<%end%>
+<%end%>
+<%for i in -5..9%>
+	<%axis_x<<i.to_s+'LP'%>
+	<%lp_count << lp_array.count(i)%>
+	
+<%end%>
+
+<%=lp_a.mean%>
+<%=lp_a.standard_deviation%>
+
+<div class="row">
+	<div class="col-xs-6">            
+        <div id="chart_div<%=n%>" style="width: 900px; height: 500px;"></div>
+    </div>
+    <div class="col-xs-6">   
+      <div id="donutchart<%=n%>" style="width: 900px; height: 500px;"></div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-6">            
+        <div id="curve_chart_div<%=n%>" style="width: 900px; height: 500px;"></div>
+    </div>
+    <div class="col-xs-6">   
+      	<div id="scatter_chart_div<%=n%>" style="width: 900px; height: 500px;"></div>
+	</div>
+</div>
+<script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+google.setOnLoadCallback(drawChart);
+function drawChart() {
+
+  var data = google.visualization.arrayToDataTable([
+    ['Levels of Progress', 'Number of Pupils',  { role: 'style' } ],
+    <%for i in 0..5%>
+    [<%=i-5%>,  <%=lp_count[i]%>, '#d9534f'],
+    <%end%>
+    <%for i in 6..7%>
+    [<%=i-5%>,  <%=lp_count[i]%>, '#f0ad4e'],
+    <%end%>
+        <%for i in 8..8%>
+    [<%=i-5%>,  <%=lp_count[i]%>, '#5cb85c'],
+    <%end%>
+        <%for i in 9..14%>
+    [<%=i-5%>,  <%=lp_count[i]%>, '#428bca'],
+    <%end%>
+
+  ]);
+
+  var options = {
+    title: 'Levels of Progress',
+    legend:  'none',
+    hAxis: {title: 'Levels of Progress', titleTextStyle: {color: 'black'}, ticks: [-5,-4,-3,-2,-1,0,1,2,3,4,5,6,7,8,9]},
+    vAxis: {title: 'Number of Pupils', maxValue: <%=lp_count.max+1%>}
+  };
+
+  var chart = new google.visualization.ColumnChart(document.getElementById('chart_div<%=n%>'));
+
+  chart.draw(data, options);
+
+}
+    </script>
+    
+    
+    
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Levels of Progress', 'Number of Pupils',  { role: 'style' }],
+          <%for i in 0..5%>
+			['<%=i-5%>LP',  <%=lp_count[i]%>, '#d9534f'],
+		<%end%>
+		<%for i in 6..7%>
+			['<%=i-5%>LP',  <%=lp_count[i]%>, '#f0ad4e'],
+		<%end%>
+		<%for i in 8..8%>
+			['<%=i-5%>LP',  <%=lp_count[i]%>, '#5cb85c'],
+		<%end%>
+		<%for i in 9..14%>
+			['<%=i-5%>LP',  <%=lp_count[i]%>, '#428bca'],
+		<%end%>
+        ]);
+
+        var options = {
+          title: 'Levels of Progress',
+          pieHole: 0.4,
+          pieSliceText: 'label',
+          legend: {
+    position: 'labeled'
+},
+          slices: {
+            0: { color: '#d9534f' },
+            1: { color: '#d9534f' },
+            2: { color: '#d9534f' },
+            3: { color: '#d9534f' },
+            4: { color: '#d9534f' },
+            5: { color: '#d9534f' },
+            6: { color: '#f0ad4e' },
+            7: { color: '#f0ad4e' },
+            8: { color: '#5cb85c' },
+            9: { color: '#428bca' },
+            10: { color: '#428bca' },
+            11: { color: '#428bca' },
+            12: { color: '#428bca' },
+            13: { color: '#428bca' },
+            14: { color: '#428bca' },
+          }
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('donutchart<%=n%>'));
+        chart.draw(data, options);
+      }
+    </script>
+	
+	<script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Levels of Progress', 'Number of Pupils',  { role: 'style' }],
+          <%for i in 0..5%>
+			['<%=i-5%>LP',  <%=lp_count[i]%>, '#d9534f'],
+		<%end%>
+          <%for i in 6..7%>
+			['<%=i-5%>LP',  <%=lp_count[i]%>, '#f0ad4e'],
+		<%end%>
+		<%for i in 8..8%>
+			['<%=i-5%>LP',  <%=lp_count[i]%>, '#5cb85c'],
+		<%end%>
+		<%for i in 9..14%>
+			['<%=i-5%>LP',  <%=lp_count[i]%>, '#428bca'],
+		<%end%>
+        ]);
+
+        var options = {
+          title: 'Levels of Progress Curve',
+          hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
+          vAxis: {minValue: 0},
+        };
+
+        var chart = new google.visualization.AreaChart(document.getElementById('curve_chart_div<%=n%>'));
+        chart.draw(data, options);
+      }
+    </script>
+    
+     <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Age', 'Weight'],
+          [-5, 0],
+          <%(0..12).step(3) do |i|%>
+          	
+			[<%=i-2%>, <%=lp_count[i,i+2].sma%>],
+		<%end%>
+        ]);
+
+        var options = {
+          title: 'Levels of Progress Moving Average',
+          hAxis: {title: 'Levels of Progress', minValue: -5, maxValue: 9, viewWindow: {
+                    min: -5
+                }},
+          vAxis: {title: 'Weight'},
+          legend: 'none',
+          trendlines: {
+      0: {
+        type: 'polynomial',
+        degree: 4,
+        visibleInLegend: true,
+        showR2: true,
+      }
+    }
+        };
+
+        var chart = new google.visualization.ScatterChart(document.getElementById('scatter_chart_div<%=n%>'));
+
+        chart.draw(data, options);
+      }
+    </script>
+    
+    
