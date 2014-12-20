@@ -20,7 +20,7 @@ class DatsController < ApplicationController
 	json = File.read('public/data.json')
 	data = JSON.parse(json)
 
-	@ks2_number = {"1C" => 1, "1B" => 2, "1A" => 3, "2C" => 4, "2B" => 5, "2A" => 6, "3C" => 7, "3B" => 8, "3A" => 9, "4C" => 10, "4B" => 11, "4A" => 12,  "5C" => 13, "5B" => 14,  "5A" => 15, "6C" => 16, "6B" => 17, "6A" => 18}
+	@ks2_number = {"W"=> 0, "1C" => 1, "1B" => 2, "1A" => 3, "2C" => 4, "2B" => 5, "2A" => 6, "3C" => 7, "3B" => 8, "3A" => 9, "4C" => 10, "4B" => 11, "4A" => 12,  "5C" => 13, "5B" => 14,  "5A" => 15, "6C" => 16, "6B" => 17, "6A" => 18}
 	
 	
 	@keys = []
