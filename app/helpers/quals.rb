@@ -1,0 +1,4 @@
+	module qualsHelper
+	
+	
+end

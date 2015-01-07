@@ -1,0 +1,74 @@
+<div id="show_core">Core Subjects</div>
+<div id="show_ebacc">Ebacc Subjects</div>
+<div id="show_other">Other Subjects</div>
+<div id="core_subjects" class="subjects">
+	<div id="subject_selection">
+		<%@core_subjects.keys.each do |s|%>
+			<div id="<%=s%>" data-code="<%=@core_subjects[s]%>" class="selection"><%=@core_subjects[s]%> <%=s%></div>
+		<%end%>
+	</div>
+</div>
+<div id="ebacc_subjects" class="subjects">
+	<div id="subject_selection">
+		<%@ebacc_subjects.keys.each do |s|%>
+			<div id="<%=s%>" data-code="<%=@ebacc_subjects[s]%>" class="selection"><%=@ebacc_subjects[s]%> <%=s%></div>
+		<%end%>
+	</div>
+</div>
+<div id="other_subjects" class="subjects">
+	<div id="subject_selection">
+		<%@other_subjects.keys.each do |s|%>
+			<div id="<%=s%>" data-code="<%=@other_subjects[s]%>" class="selection"><%=@other_subjects[s]%> <%=s%></div>
+		<%end%>
+	</div>
+</div>
+
+<br />
+<br />
+<hr>
+<div id="list">
+
+</div>
+
+<script>
+
+$('.subjects').hide();
+ruby_list=[];
+$('#show_core').click(function(){
+	$('.subjects').hide();
+	$('#core_subjects').show();
+});
+
+$('#show_ebacc').click(function(){
+	$('.subjects').hide();
+	$('#ebacc_subjects').show();
+});
+
+$('#show_other').click(function(){
+	$('.subjects').hide();
+	$('#other_subjects').show();
+});
+
+$('.selection').click(function() {
+   code = $(this).data('code');
+   $(this).hide('slow');
+   $('#list').append('<div id='+this.id+' data-code='+code+' class="list_item">'+code+' '+this.id+'</div>');
+   ruby_list.push(code);
+	console.log(ruby_list);
+	
+	$('.list_item').click(function() {
+   code = $(this).data('code');
+   $(this).hide('slow');
+   $('#'+this.id).show();
+   ruby_list = jQuery.grep(ruby_list, function( a ) {
+  		return a !== code;
+	});
+	console.log(ruby_list);
+	});
+	
+});
+
+
+
+
+</script>

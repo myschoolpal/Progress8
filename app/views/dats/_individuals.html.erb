@@ -1,0 +1,35 @@
+<div class="cont">
+	<%@students.each do |student|%>
+		<div class="page">
+			<%=student['Forename']%>
+			<%=student['Surname']%>
+			
+			<%=student['English_KS2_grade']%>
+			<%=student['Maths_KS2_grade']%>
+			<%=student['Value Added']%>
+			<br />
+			<br/>
+			<table>
+			<%student.drop(11).each do |d|%>
+				<%if d[0].include? '_Class'%>
+					</tr><tr>
+				<%end%>
+					<td>
+					<%if !d[1].blank?%>
+						<%if d[0].include? '_Class'%>
+							<%=d[0][0..-7].gsub(/-/, ' ')%>
+						<%end%>
+						 </td>
+						<td>
+						<%if d[0].include? '-'%>
+							<%=d[1]%>
+						<%end%>
+					<%end%>
+					</td>
+				
+			<%end%>
+			</table>
+			
+		</div>
+	<%end%>
+</div>

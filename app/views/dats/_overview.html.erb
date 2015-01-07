@@ -1,0 +1,15 @@
+
+<table class="table">
+	<tr>
+<%@students[0].keys.each do |k|%>
+	<td><%=k%></td>
+<%end%>
+	</tr>
+<%@students.each do |student|%>
+	<tr>
+		<%student.each do |d|%>
+			<td><%=d[1]%></td>
+		<%end%>
+	</tr>
+<%end%>
+</table>

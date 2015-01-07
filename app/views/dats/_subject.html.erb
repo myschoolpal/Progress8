@@ -1,0 +1,149 @@
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+<style>
+.fa-check-circle {
+font-size:18px;
+}
+
+.qual_title {
+font-size:20px;
+font-weight:bold;
+}
+
+.class_title {
+font-size:16px;
+}
+
+.class_table {
+border:0px solid white;
+}
+
+.class_table td {
+width:70px;
+}
+
+
+</style>
+
+<div class="cont">
+	<%subjects_hash = {}%>
+	<%class_hash = {}%>
+	<%student_array = []%>
+
+	<%subject_titles = []%>
+	<%@students[0].keys.each do |k|%>
+		<%if k.include? '_Class'%>
+			<%subject_titles.push(k[0..-7])%>
+		<%end%>
+	<%end%>
+	<%subject_titles.each do |s|%>
+		<%classes = []%>
+		<%@students.each do |d|%>
+			<%if !classes.include? d[s+'_Class']%>
+				<%classes.push(d[s+'_Class'])%>
+			<%end%>
+		<%end%>
+		<%qualification_title =s.gsub(/-/, ' ')%>
+		<br />
+		<%classes.reject! { |c| c.empty? }%>
+	
+		<%subject_lp = []%>
+		<%subject_va = []%>
+		<%subject_ps = []%>
+	
+		<%classes.each do |class_name| %>
+			<div class="page">
+				<%class_lp = []%>
+				<%class_va = []%>
+				<%class_ps = []%>
+				<p class="qual_title"><%=qualification_title%></p>
+				<p class="class_title"><strong>Class: </strong><%=class_name%></p>
+				<table class="text-center class_table">
+					<tr>
+						<%i=0%>
+						<%@students[0].keys.first(9).each do |k|%>
+							
+								<td><%=@display_details[i]%></td>
+							<%i+=1%>
+						<%end%>
+						<%@students[0].keys.each do |k|%>
+							<%if k.include? s%>
+								<%if k.include? '_Class'%>
+									
+								<%elsif k.include? 'Points Score'%>
+									<td>Points Score</td>
+								<%else%>
+									<td>Result</td>
+								<%end%>
+							<%end%>
+						<%end%>
+						<td>Levels of Progress</td>
+						<td>Value Added</td>
+					</tr>
+				<%@students.each do |student|%>
+					<%if student[s+'_Class'] == class_name && !student[s].blank?%>
+						<tr>
+							<%student.first(12).each do |d|%>
+								<%if !d[0].upcase.include? 'FINE'%>
+									
+									<%if d[0] == 'Expected Attainment 8'%>
+										<td><%=(d[1].to_f/10).round(1)%></td>
+									<%else%>
+										<%if ['SEN','PP','EAL'].include? d[0].upcase %>
+											<%if d[1] == 'Y'%>
+												<td><i class="fa fa-check-circle"></i></td>
+											<%else%>
+												<td></td>
+											<%end%>
+										<%else%>
+											<td><%=d[1]%></td>
+										<%end%>
+									<%end%>
+								<%end%>
+							<%end%>
+							<%student.each do |d|%>
+								<%if d[0].include? s %>
+									<%if !d[0].include? '_Class'%>
+									<td><%=d[1]%></td>
+									<%end%>
+									<%if d[0].include? 'Points Score'%>
+										<td>
+											<%=lp = calculate_levels_of_progess(student['English_KS2_grade'],student['Maths_KS2_grade'],d[0],d[1])%>
+											<%class_lp << lp%>
+											<%class_ps << d[1]%>
+										</td>
+										<td>
+										<%if student['Expected Attainment 8'] && d[1]%>
+											<%=va =(d[1] - student['Expected Attainment 8'].to_f/10 ).round(1)%>
+											<%class_va << va%>
+										<%end%>
+										</td>
+									<%end%>
+								<%end%>
+							<%end%>
+						</tr>
+					<%end%>
+				<%end%>
+				</table>
+				Average Class Levels of Progress <%=(class_lp.inject(0.0) { |sum, el| sum + el } / class_lp.size).round(1)%>
+				<%subject_lp << class_lp.inject(0.0) { |sum, el| sum + el } / class_lp.size%>
+				</br>
+				Average Class Value Added <%=(class_va.inject(0.0) { |sum, el| sum + el } / class_va.size).round(1)%>
+				<%subject_va << class_va.inject(0.0) { |sum, el| sum + el } / class_va.size%>
+				</br>
+				Average Class Points Score <%=av_ps = class_ps.inject(0.0) { |sum, el| sum + el } / class_ps.size%>
+				<%subject_ps << av_ps%>
+				</br>
+				Average Class Grade <%=@grade_score.key(av_ps.to_i)%>
+				</br>
+			</div>
+		<%end%>
+		Average Subject LP <%=(subject_lp.inject(0.0) { |sum, el| sum + el } / subject_lp.size).round(1)%>
+		</br>
+		Average Subject VA <%=(subject_va.inject(0.0) { |sum, el| sum + el } / subject_va.size).round(1)%>
+		</br>
+		Average Subject PS <%=(subject_ps.inject(0.0) { |sum, el| sum + el } /subject_ps.size).round(1)%>
+		</br>
+		</br>
+	<%end%>
+</div>
