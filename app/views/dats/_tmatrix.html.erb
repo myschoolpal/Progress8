@@ -30,7 +30,7 @@
 									<%if d[i]['grade'] && d[i]['ks2']%>
 										<%if d[i]['grade']==j && d[i]['ks2']==l%>
 											<p class="tm_text">
-												<%names << d[i]['name'] %>
+												<%names << d[i]['surname'].to_s + ' ' + d[i]['forename'].to_s %>
 											</p>
 											<%n+=1%>
 								
@@ -50,9 +50,9 @@
 							<%elsif on_target.include? k%>
 								<td class="on_target stats">
 							<%else%>
-								<td class="below stats"   >
+								<td class="below stats">
 							<%end%>
-							<div class="row " >
+							<div class="row ">
 								<div class="col-md-12 " >
 								<p>
 								
