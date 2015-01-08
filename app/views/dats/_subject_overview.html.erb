@@ -1,0 +1,191 @@
+<div class="page">
+		<p class="qual_title">Subject Overview</p>
+		
+		<table class="table">
+			<tr>
+				<th>Qualification</th>
+				<th>APS</th>
+				<th>LP</th>
+				<th>VA</th>
+				
+			</tr>
+		<%data.each do |s|%>
+			<tr>
+				<td><%=s[:name]%></td>
+				<td><%=s[:ps]%></td>
+				<td><%=s[:lp]%></td>
+				<td><%=s[:va]%></td>
+			<tr>
+		<%end%>
+		</table>
+	</div>
+	<div class="page">
+		<p class="qual_title">Subject Overview</p>
+		<p class="class_title">Levels of Progress by Subject</p>
+		<div style="width: 900px; height: 600px;" id='lp_overview_chart'></div>	
+		<p class="class_title">Value Added Score by Subject</p>
+		<div style="width: 900px; height: 600px;" id='va_overview_chart'></div>	
+	</div>
+	<div class="page">
+		<p class="qual_title">Subject Overview</p>
+		<p class="class_title">Average Point Score by Subject</p>
+		<div style="width: 900px; height: 600px;" id='ps_overview_chart'></div>	
+	</div>
+	<div class="page">
+		<p class="qual_title">Subject Overview - A* - C</p>
+		<table class="table">
+			<tr>
+				<th>Qualification</th>
+				<th>A* - G</th>
+				<th>A* - C</th>
+				<th>A* - A</th>
+			</tr>
+		<%data.each do |s|%>
+			<tr>
+				<td><%=s[:name]%></td>
+				<td>
+				<%if s[:a_g]<95%>
+					<div class="numberCircle_percent below_color">
+				<%elsif s[:a_g]<99%>
+					<div class="numberCircle_percent one_below_color">
+				<%elsif s[:a_g]<100%>
+					<div class="numberCircle_percent on_track_color">
+				<%elsif s[:a_g]=100%>
+					<div class="numberCircle_percent above_color">
+				<%end%>
+				<%=s[:a_g]%></div></td>
+				<td>
+				<%if s[:a_c]<50%>
+					<div class="numberCircle_percent below_color">
+				<%elsif s[:a_c]<65%>
+					<div class="numberCircle_percent one_below_color">
+				<%elsif s[:a_c]<75%>
+					<div class="numberCircle_percent on_track_color">
+				<%elsif s[:a_c]>=75%>
+					<div class="numberCircle_percent above_color">
+				<%end%>
+				<%=s[:a_c]%></div></td>
+				<td>
+				<%if s[:a_a]<10%>
+					<div class="numberCircle_percent below_color">
+				<%elsif s[:a_a]<35%>
+					<div class="numberCircle_percent one_below_color">
+				<%elsif s[:a_a]<40%>
+					<div class="numberCircle_percent on_track_color">
+				<%elsif s[:a_a]>=40%>
+					<div class="numberCircle_percent above_color">
+				<%end%>
+				<%=s[:a_a]%></div></td>
+			</tr>
+		<%end%>
+	</div>
+	
+	
+    
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Subject', 'Lp',  { role: 'style' } ],
+		<%data.each do |d|%>
+			<%if d[:lp] <0%>
+				['<%=d[:name]%>',  <%=d[:lp]%>,'#000000'],
+			<%elsif d[:lp] <3%>
+         	 	['<%=d[:name]%>',  <%=d[:lp]%>,'#d9534f'],
+         	<%elsif d[:lp] <4%>
+         		['<%=d[:name]%>',  <%=d[:lp]%>,'#f0ad4e'],
+         	<%elsif d[:lp] <5 %>
+         		['<%=d[:name]%>',  <%=d[:lp]%>,'#5cb85c'],
+         	<%elsif d[:lp] >=5%>
+         		['<%=d[:name]%>',  <%=d[:lp]%>,'#428bca'],
+         	<%end%>
+		<%end%>
+        ]);
+
+        var options = {
+          title: '',
+          vAxis: {title: "",  titleTextStyle: {color: 'red'}, textStyle: {fontSize: 12}},
+          chartArea: {  width: "50%", height: "90%", left:450, top:0 },
+           legend: 'none',
+          hAxis: {title: 'Levels of Progress',  titleTextStyle: {color: 'grey'}}
+        };
+
+        var chart = new google.visualization.BarChart(document.getElementById('lp_overview_chart'));
+
+        chart.draw(data, options);
+      }
+   
+    </script>
+    
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Subject', 'Lp',  { role: 'style' } ],
+		<%data.each do |d|%>
+			<%if d[:va] < -0.5%>
+				['<%=d[:name]%>',  <%=d[:va]%>,'#000000'],
+			<%elsif d[:va] <0%>
+         	 	['<%=d[:name]%>',  <%=d[:va]%>,'#d9534f'],
+         	<%elsif d[:va] <1%>
+         		['<%=d[:name]%>',  <%=d[:va]%>,'#f0ad4e'],
+         	<%elsif d[:va] <2 %>
+         		['<%=d[:name]%>',  <%=d[:va]%>,'#5cb85c'],
+         	<%elsif d[:va] >=2%>
+         		['<%=d[:name]%>',  <%=d[:va]%>,'#428bca'],
+         	<%end%>
+		<%end%>
+        ]);
+
+        var options = {
+          title: '',
+          vAxis: {title: "",  titleTextStyle: {color: 'red'}, textStyle: {fontSize: 12}},
+          chartArea: {  width: "50%", height: "90%", left:450, top:0 },
+           legend: 'none',
+          hAxis: {title: 'Value Added',  titleTextStyle: {color: 'grey'}}
+        };
+
+        var chart = new google.visualization.BarChart(document.getElementById('va_overview_chart'));
+
+        chart.draw(data, options);
+      }
+   
+    </script>
+    
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Subject', 'Lp',  { role: 'style' } ],
+		<%data.each do |d|%>
+			<%if d[:ps] < 3%>
+				['<%=d[:name]%>',  <%=d[:ps]%>,'#000000'],
+			<%elsif d[:ps] <4%>
+         	 	['<%=d[:name]%>',  <%=d[:ps]%>,'#d9534f'],
+         	<%elsif d[:ps] <5%>
+         		['<%=d[:name]%>',  <%=d[:ps]%>,'#f0ad4e'],
+         	<%elsif d[:ps] <7 %>
+         		['<%=d[:name]%>',  <%=d[:ps]%>,'#5cb85c'],
+         	<%elsif d[:ps] >=7%>
+         		['<%=d[:name]%>',  <%=d[:ps]%>,'#428bca'],
+         	<%end%>
+		<%end%>
+        ]);
+
+        var options = {
+          title: '',
+          vAxis: {title: "",  titleTextStyle: {color: 'red'}, textStyle: {fontSize: 12}},
+          chartArea: {  width: "50%", height: "90%", left:450, top:0 },
+           legend: 'none',
+          hAxis: {title: 'Average Point Score',  titleTextStyle: {color: 'grey'}}
+        };
+
+        var chart = new google.visualization.BarChart(document.getElementById('ps_overview_chart'));
+
+        chart.draw(data, options);
+      }
+   
+    </script>

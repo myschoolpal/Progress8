@@ -1,5 +1,5 @@
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-
+<%require 'descriptive_statistics'%>
 <style>
 .fa-check-circle {
 	font-size:22px;
@@ -21,6 +21,18 @@
 
 .class_table td {
 
+}
+.numberCircle_percent {
+	margin-left:auto;
+	margin-right:auto;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    padding-top: 5px;
+    pading-left:1px;
+    background: #fff;
+    text-align: center;
+    font: 10px Arial, sans-serif;
 }
 .numberCircle {
 	margin-left:auto;
@@ -55,16 +67,17 @@
  	background-color:#428bca;
  	color: #fff;
 }
-
+.hidden {
+display:none;
+}
 
 </style>
 
 <%n=1%>
 
 <div class="cont">
-	<%subjects_hash = {}%>
-	<%class_hash = {}%>
-	<%student_array = []%>
+	<div class="hidden">
+	<%subject_overall_data=[]%>
 
 	<%subject_titles = []%>
 	<%@students[0].keys.each do |k|%>
@@ -73,6 +86,7 @@
 		<%end%>
 	<%end%>
 	<%subject_titles.each do |s|%>
+		<%subject_summary_hash ={}%>
 		<%classes = []%>
 		<%@students.each do |d|%>
 			<%if !classes.include? d[s+'_Class'].upcase%>
@@ -295,11 +309,11 @@
 							<td>
 						<%end%>
 						<%=lp%></td>
-					<td> <%=(subject_va.inject(0.0) { |sum, el| sum + el } / subject_va.size).round(1)%></td>
-					<td><%=(subject_ps.inject(0.0) { |sum, el| sum + el } /subject_ps.size).round(1)%></td>
+					<td> <%=sub_va = (subject_va.inject(0.0) { |sum, el| sum + el } / subject_va.size).round(1)%></td>
+					<td><%=sub_ps =(subject_ps.inject(0.0) { |sum, el| sum + el } /subject_ps.size).round(1)%></td>
 				</tr>
 			</table>
-			 
+
 			 <div class="row">
 					<%render 'lp_piechart', {:d => subject_data, :n =>n }%>
 				</div>
@@ -313,73 +327,89 @@
 					</div>
 				</div>
 			 </div>
+			 <%subject_summary_hash = {:name => qualification_title, :lp => lp, :va => sub_va, :ps => sub_ps, :a_g => @a_g_percentage, :a_c => @a_a_percentage, :a_a => @a_a_percentage}%>
+			 <%subject_overall_data << subject_summary_hash%>
 			<%n+=1%>
-			<div class="page">
-				<p class="qual_title">Key Target Areas - <%=s.gsub(/-/, ' ')%></p>
-				<p class="class_title">Levels of Progress</p>
-				<h5>The pupils listed below have all been identified as key pupils for support. </h5>
-				<br />
-					<%below_lp =[]%>
-					<%below_va = []%>
-					<%subject_data.each do |pupil|%>
-						<%if pupil['lp']<=3%>
-							<%below_lp << pupil%>
+			
+			<%below_lp =[]%>
+			<%below_va = []%>
+			<%subject_data.each do |pupil|%>
+				<%if pupil['lp']<3%>
+					<%below_lp << pupil%>
+				<%end%>
+				<%if pupil['va']<=0%>
+					<%below_va << pupil%>
+				<%end%>
+			<%end%>
+			
+			<%lp_count_pages = below_lp.count/30%>
+			<%for i in 0..lp_count_pages%>
+				<div class="page">
+					<p class="qual_title">Key Target Areas - <%=qualification_title%></p>
+					<p class="class_title">Levels of Progress</p>
+					<h5>The pupils listed below have all been identified as key pupils for support. </h5>
+					<br />
+					
+						<%if !below_lp.empty?%>
+							<table class="table">
+								<tr>
+									<th>Surname</th>
+									<th>Forename</th>
+									<th>KS2</th>
+									<th>Point Score</th>
+									<th>Levels of Progress</th>
+								</tr>
+							<%below_lp.sort_by { |h| h['lp'] }.drop(30*i).first(30).each do |pupil|%> 
+								<tr>
+									<td><%=pupil['surname']%></td>
+									<td><%=pupil['forename']%></td>
+									<td><%=@ks2_number.key(pupil['ks2'])%></td>
+									<td><%=pupil['grade']%> (<%=@grade_score.key(pupil['grade'])%>)</td>
+									<td><%=pupil['lp']%></td>
+								</tr>
+							<%end%>
+							</table>
+						<%else%>
+							<h5>There are no pupils making less than 3 levels of progress in this subject.</h5>
 						<%end%>
-					<%end%>
-					<%if !below_lp.empty?%>
-						<table class="table">
-							<tr>
-								<th>Surname</th>
-								<th>Forename</th>
-								<th>KS2</th>
-								<th>Point Score</th>
-								<th>Levels of Progress</th>
-							</tr>
-						<%below_lp.each do |pupil|%> 
-							<tr>
-								<td><%=pupil['surname']%></td>
-								<td><%=pupil['forename']%></td>
-								<td><%=@ks2_number.key(pupil['ks2'])%></td>
-								<td><%=pupil['grade']%> (<%=@grade_score.key(pupil['grade'])%>)</td>
-								<td><%=pupil['lp']%></td>
-							</tr>
-						<%end%>
-						</table>
-					<%else%>
-						<h5>There are no pupils making less than 3 levels of progress in this subject.</h5>
-					<%end%>
-				<p class="class_title">Value Added</p>
-				<h5>The pupils listed below have all been identified as key pupils for support. </h5>
+				</div>
+			<%end%>
+			<%va_count_pages = below_va.count/30%>
+			<%for i in 0..va_count_pages%>
+				<div class="page">
+					<p class="qual_title">Key Target Areas - <%=qualification_title%></p>
+					<p class="class_title">Value Added</p>
+					<h5>The pupils listed below have all been identified as key pupils for support. </h5>
 				
-					<%subject_data.each do |pupil|%>
-						<%if pupil['va']<=0%>
-							<%below_va << pupil%>
+					
+						<%if !below_va.empty?%>
+							<table class="table">
+								<tr>
+									<th>Surname</th>
+									<th>Forename</th>
+									<th>KS2</th>
+									<th>Point Score</th>
+									<th>Value Added Score</th>
+								</tr>
+							<%below_va.sort_by { |h| h['va'] }.drop(30*i).first(30).each do |pupil|%>  
+								<tr>
+									<td><%=pupil['surname']%></td>
+									<td><%=pupil['forename']%></td>
+									<td><%=@ks2_number.key(pupil['ks2'])%></td>
+									<td><%=pupil['grade']%> (<%=@grade_score.key(pupil['grade'])%>)</td>
+									<td><%=pupil['va']%></td>
+								</tr>
+							<%end%>
+							</table>
+						<%else%>
+							<h5>There are no pupils with a Value Added Score of 0 or less in this subject.</h5>
 						<%end%>
-					<%end%>
-					<%if !below_va.empty?%>
-						<table class="table">
-							<tr>
-								<th>Surname</th>
-								<th>Forename</th>
-								<th>KS2</th>
-								<th>Point Score</th>
-								<th>Value Added Score</th>
-							</tr>
-						<%below_va.each do |pupil|%> 
-							<tr>
-								<td><%=pupil['surname']%></td>
-								<td><%=pupil['forename']%></td>
-								<td><%=@ks2_number.key(pupil['ks2'])%></td>
-								<td><%=pupil['grade']%> (<%=@grade_score.key(pupil['grade'])%>)</td>
-								<td><%=pupil['va']%></td>
-							</tr>
-						<%end%>
-						</table>
-					<%else%>
-						<h5>There are no pupils with a Value Added Score of 0 or less in this subject.</h5>
-					<%end%>
-				
-				
-			</div>
-	<%end%>
+				</div>
+			<%end%>
+			
+		<%end%>
+	</div>
+	
+	<%=render 'subject_overview', {:data => subject_overall_data}%>
+	
 </div>

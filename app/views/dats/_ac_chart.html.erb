@@ -50,13 +50,13 @@
 			Percentage of Pupils
 		</td>
 		<td>
-			<%=100*grade_array.count{|x| x > 0 }/d.length%>
+			<%=@a_g_percentage = 100*grade_array.count{|x| x > 0 }/d.length%>
 		</td>
 		<td>
-			<%=100*grade_array.count{|x| x > 4 }/d.length%>
+			<%=@a_c_percentage = 100*grade_array.count{|x| x > 4 }/d.length%>
 		</td>
 		<td>
-			<%=100*grade_array.count{|x| x > 6 }/d.length%>
+			<%=@a_a_percentage = 100*grade_array.count{|x| x > 6 }/d.length%>
 		</td>		
 	</tr>
 	
