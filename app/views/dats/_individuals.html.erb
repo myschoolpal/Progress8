@@ -1,35 +1,90 @@
+
+<%a=0%>
 <div class="cont">
 	<%@students.each do |student|%>
+		
+		<%student_layout_array =[]%>
+		<%student_layout_hash ={}%>
+		<%n=0%>
+		<%student.drop(12).each do |d|%>
+			<%if d[0].include? '_Class'%>
+				<%student_layout_hash = {:title => d[0][0..-7], :class_name => d[1]}%>
+					
+			<%end%>
+			<%if student_layout_hash[:title] == d[0]%>
+				<%student_layout_hash[:result] = d[1]%></td>
+			<%end%>
+			<%if student_layout_hash[:title]+' Points Score' == d[0]%>
+				<%student_layout_hash[:ps] = d[1]%>
+			<%end%>
+			<%n+=1%>
+			<%if n%3 == 0%>
+			<%if !student_layout_hash[:class_name].blank?%>
+				<%student_layout_array << student_layout_hash%>
+			<%end%>
+			<%end%>
+		<%end%>
+	
 		<div class="page">
-			<%=student['Forename']%>
-			<%=student['Surname']%>
+			<p class='qual_title'><%=student['Forename']%> <%=student['Surname']%></p>
+			<div class="row">
+				<div class="col-xs-2 text-center">
+					<h6>English KS2 Grade</h6>
+					<div class="numberCircle_large individual_ks2_gap"><%=student['English_KS2_grade']%></div>
+					<h6>Maths KS2 Grade</h6>
+					<div class="numberCircle_large  individual_ks2_gap"><%=student['Maths_KS2_grade']%></div>
+					<h6>Value Added Score</h6>
+					<div class="numberCircle_large individual_ks2_gap">
+					<%if student['Value Added'].to_i >0%>
+						+<%=student['Value Added']%></div>
+					<%else%>
+						<%=student['Value Added']%></div>
+					<%end%>
+				</div>
+
+				<div class="col-xs-10">
+					<%=render 'student_bar_chart', {:d => student_layout_array, :en_ks2 =>student['English_KS2_grade'], :ma_ks2 => student['Maths_KS2_grade'], :a=>a}%>
+					<%a+=1%>
+				</div>
+			</div>
 			
-			<%=student['English_KS2_grade']%>
-			<%=student['Maths_KS2_grade']%>
-			<%=student['Value Added']%>
+			
 			<br />
 			<br/>
-			<table>
-			<%student.drop(11).each do |d|%>
-				<%if d[0].include? '_Class'%>
-					</tr><tr>
-				<%end%>
-					<td>
-					<%if !d[1].blank?%>
-						<%if d[0].include? '_Class'%>
-							<%=d[0][0..-7].gsub(/-/, ' ')%>
-						<%end%>
-						 </td>
-						<td>
-						<%if d[0].include? '-'%>
-							<%=d[1]%>
-						<%end%>
-					<%end%>
-					</td>
+			
+			<table class="table">
+				<tr>
+				<th>Qualification</th>
+				<th>Class</th>
+				<th>Grade</th>
+				<th>Point Score</th>
 				
+			</tr>
+			<%student_layout_array.each do |s|%>
+				<tr>
+					<%lp = calculate_levels_of_progess(student['English_KS2_grade'], student['Maths_KS2_grade'], s[:title], s[:ps])%>
+					<td><%=s[:title].gsub(/-/, ' ')%></td>
+					<td><%=s[:class_name]%></td>
+					<td><%=s[:result]%></td>
+					 
+					<td>
+					<%if lp<3%>
+						<div class="numberCircle_percent below_color">
+					<%elsif lp<4%>
+						<div class="numberCircle_percent one_below_color">
+					<%elsif lp<5%>
+						<div class="numberCircle_percent on_track_color">
+					<%elsif lp >=5%>
+						<div class="numberCircle_percent above_color">
+					<%end%>
+					<%=s[:ps]%>
+					</div>
+					</td>
+					
+				</tr>
 			<%end%>
 			</table>
-			
 		</div>
 	<%end%>
 </div>
+

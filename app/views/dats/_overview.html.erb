@@ -1,4 +1,93 @@
-
+<%school_overview_array = []%>
+<div class="cont"%>
+	<div class="page">
+		<table class="table">
+			<tr>
+				<th>Surname</th>
+				<th>Forename</th>
+				<th>PP</th>
+				<th>SEN</th>
+				<th>EAL</th>
+				<th>KS2 AVG</th>
+				<th>EA8</th>
+				<th>Maths</th>
+				<th>English</th>
+				<th>Doubled</th>
+				<th>Other Ebacc</th>
+				<th>Other</th>
+				<th>A8</th>
+				<th>P8</th>
+				<th>VA</th>
+			</tr>
+			<%@students.sort_by { |h| h['Value Added'] }.each do |student|%>
+				<%school_overview_hash = {}%>
+				<tr>
+					<td><%=student['Surname']%></td>
+					<td><%=student['Forename']%></td>
+					<td><%=student['PP']%></td>
+					<td><%=student['SEN']%></td>
+					<td><%=student['EAL']%></td>
+					<td><%=student['Average KS2 Fine']%></td>
+					<td><%=school_overview_hash[:ea8] = student['Expected Attainment 8']%></td>					
+					<td><%=school_overview_hash[:ma] = student['Maths_Points_Score']%></td>
+					<td><%=school_overview_hash[:en] = student['English_Points_Score']%></td>
+					<td>
+						<%if student['English_Literature_Points_Score']>0%>
+							<i class="fa fa-check-circle"></i>
+						<%end%>
+					</td>
+					<td><%=school_overview_hash[:eb] = student['Other Ebacc Subjects']%></td>
+					<td><%=school_overview_hash[:other] = student['Other Subjects']%></td>
+					<td><%=school_overview_hash[:a8] = student['Attainment 8']%></td>
+					<td><%=school_overview_hash[:p8] = student['Progress 8']%></td>
+					<td><%=school_overview_hash[:va] = student['Value Added']%></td>
+				</tr>
+				<%school_overview_array << school_overview_hash%>
+			<%end%>
+		</table>
+	</div>
+	<div class="page">
+		<p class="qual_title"%>School Summary Page</p>
+		<%total = school_overview_array.inject{|memo, el| memo.merge( el ){|k, old_v, new_v| old_v + new_v}}%>
+		<%num_pupils = school_overview_array.count%>
+		<div class="row text-center">
+			<div class="col-xs-3">
+				<p class="total_title">Expected Attainment 8</p>
+				<%= (total[:ea8].to_f/num_pupils).round(2)%>
+			</div>
+			<div class="col-xs-3">
+				<p class="total_title">Average Maths Score</p>
+				<%= (total[:ma].to_f/num_pupils).round(2)%>
+			</div>
+			<div class="col-xs-3">
+				<p class="total_title">Average English Score</p>
+				<%= (total[:en].to_f/num_pupils).round(2)%>
+			</div>
+			<div class="col-xs-3">
+				<p class="total_title">Average Other Ebacc Score</p>
+				<%= (total[:eb].to_f/num_pupils).round(2)%>
+			</div>
+		</div>
+		<div class="row text-center">
+			<div class="col-xs-3">
+				<p class="total_title">Average Other Subjects Score</p>
+				<%= (total[:other].to_f/num_pupils).round(2)%>
+			</div>
+			<div class="col-xs-3">
+				<p class="total_title">Average Attainment 8</p>
+				<%= (total[:a8].to_f/num_pupils).round(2)%>
+			</div>
+			<div class="col-xs-3">
+				<p class="total_title">Average Progress 8</p>
+				<%= (total[:p8].to_f/num_pupils).round(2)%>
+			</div>
+			<div class="col-xs-3">
+				<p class="total_title">Average Value Added</p>
+				<%= (total[:va].to_f/num_pupils).round(2)%>	
+			</div>
+		</div>
+	</div>
+</div>
 <table class="table">
 	<tr>
 <%@students[0].keys.each do |k|%>

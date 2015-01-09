@@ -1,82 +1,13 @@
-<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
 <%require 'descriptive_statistics'%>
 <style>
-.fa-check-circle {
-	font-size:22px;
-	color:#428bca;
-}
-
-.qual_title {
-	font-size:20px;
-	font-weight:bold;
-}
-
-.class_title {
-	font-size:16px;
-}
-
-.class_table {
-	
-}
-
-.class_table td {
-
-}
-.numberCircle_percent {
-	margin-left:auto;
-	margin-right:auto;
-    border-radius: 50%;
-    width: 25px;
-    height: 25px;
-    padding-top: 5px;
-    pading-left:1px;
-    background: #fff;
-    text-align: center;
-    font: 10px Arial, sans-serif;
-}
-.numberCircle {
-	margin-left:auto;
-	margin-right:auto;
-    border-radius: 50%;
-    width: 28px;
-    height: 28px;
-    padding: 6px;
-    background: #fff;
-    text-align: center;
-    font: 12px Arial, sans-serif;
-    
-}
-.below_color{
- 	border: 1px solid #d9534f;
-	background-color:#d9534f;
-	color: #fff;
-}
-.one_below_color {
- 	border: 1px solid #f0ad4e;
- 	background-color:#f0ad4e;
-	color: #fff;
-}
-.on_track_color {
- 	border: 1px solid #5cb85c;
- 	background-color:#5cb85c;
- 	color: #fff;
-}
-
-.above_color {
-	border: 1px solid #428bca;
- 	background-color:#428bca;
- 	color: #fff;
-}
-.hidden {
-display:none;
-}
 
 </style>
 
 <%n=1%>
 
 <div class="cont">
-	<div class="hidden">
+	<div class="">
 	<%subject_overall_data=[]%>
 
 	<%subject_titles = []%>
@@ -264,7 +195,7 @@ display:none;
 				</table>
 						 
 				<div class="row">
-					<%render 'lp_piechart', {:d => d, :n =>n }%>
+					<%=render 'lp_piechart', {:d => d, :n =>n }%>
 				</div>
 				<hr>
 				<div class="row">
@@ -272,7 +203,7 @@ display:none;
 						<%=render 'mini_tmatrix', {:d =>d, :n =>n}%>
 					</div>
 					<div class="col-xs-6">
-						<%render 'ac_chart', {:d =>d, :n=>n}=%>
+						<%=render 'ac_chart', {:d =>d, :n=>n}=%>
 					</div>
 				</div>
 					
@@ -315,7 +246,7 @@ display:none;
 			</table>
 
 			 <div class="row">
-					<%render 'lp_piechart', {:d => subject_data, :n =>n }%>
+					<%=render 'lp_piechart', {:d => subject_data, :n =>n }%>
 				</div>
 				<hr>
 				<div class="row">
@@ -323,7 +254,7 @@ display:none;
 						<%=render 'mini_tmatrix', {:d =>subject_data, :n =>n}%>
 					</div>
 					<div class="col-xs-6">
-						<%render 'ac_chart', {:d =>subject_data, :n=>n}=%>
+						<%=render 'ac_chart', {:d =>subject_data, :n=>n}=%>
 					</div>
 				</div>
 			 </div>
