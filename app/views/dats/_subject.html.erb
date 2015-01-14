@@ -160,28 +160,23 @@
 				
 						 
 				<div class="row">
-					<%render 'lp_piechart', {:d => d, :n =>n }%>
+					<%=render 'lp_piechart', {:d => d, :n =>n }%>
 				</div>
 				<hr>
 				<div class="row">
 					<div class="col-xs-6" >
-						<%render 'mini_tmatrix', {:d =>d, :n =>n}%>
+						<%=render 'mini_tmatrix', {:d =>d, :n =>n}%>
 					</div>
 					<div class="col-xs-6">
-						<%render 'ac_chart', {:d =>d, :n=>n}=%>
-						
-						
+						<%=render 'ac_chart', {:d =>d, :n=>n}=%>
 					</div>
 				</div>
-				
-					
-				<%n+=1%>
-			
 			</div>
 			<div class="page">
 				<p class="qual_title">Value Added Chart - <%=class_name.upcase%></p>
-				<%render 'va_class_chart', {:d =>d, :n=>n}=%>
+				<%=render 'va_class_chart', {:d =>d, :n=>n}=%>
 			</div>
+				<%n+=1%>
 			<div class="page">
 				<p class="qual_title">Transition Matrix - <%=class_name.upcase%></p>
 				<%=render 'tmatrix', :d => d%>
@@ -195,15 +190,15 @@
 		
 
 			 <div class="row">
-					<%render 'lp_piechart', {:d => subject_data, :n =>n }%>
+					<%=render 'lp_piechart', {:d => subject_data, :n =>n }%>
 				</div>
 				<hr>
 				<div class="row">
 					<div class="col-xs-6">
-						<%render 'mini_tmatrix', {:d =>subject_data, :n =>n}%>
+						<%=render 'mini_tmatrix', {:d =>subject_data, :n =>n}%>
 					</div>
 					<div class="col-xs-6">
-						<%render 'ac_chart', {:d =>subject_data, :n=>n}=%>
+						<%=render 'ac_chart', {:d =>subject_data, :n=>n}=%>
 					</div>
 				</div>
 			 </div>
