@@ -1,6 +1,5 @@
     
 <%require 'descriptive_statistics'%>
-
 <div class="row">
 	<div class="col-xs-4 text-center">  
 		<div id="gaugeAG_div<%=n%>" style="width: 400px; height: 120px;"></div>
@@ -37,30 +36,36 @@
 		</td>
 		<td>
 			<%=grade_array.count{|x| x > 0 }%>
+			<%@a_g_percentage = 100*grade_array.count{|x| x > 0 }/d.length%>
 		</td>
 		<td>
 			<%=grade_array.count{|x| x > 4 }%>
+			<%@a_c_percentage = 100*grade_array.count{|x| x > 4 }/d.length%>
 		</td>
 		<td>
 			<%=grade_array.count{|x| x > 6 }%>
+			<%@a_a_percentage = 100*grade_array.count{|x| x > 6 }/d.length%>
 		</td>		
 	</tr>
 	<tr>
 		<td>
 			Percentage of Pupils
 		</td>
-		<td>
-			<%=@a_g_percentage = 100*grade_array.count{|x| x > 0 }/d.length%>
+		<td class=" <%=color_class(@a_g_percentage,'a_g')%>">
+			<%=@a_g_percentage%>
 		</td>
-		<td>
-			<%=@a_c_percentage = 100*grade_array.count{|x| x > 4 }/d.length%>
+		<td class="<%=color_class(@a_c_percentage,'a_c')%>">
+			<%=@a_c_percentage%>
 		</td>
-		<td>
-			<%=@a_a_percentage = 100*grade_array.count{|x| x > 6 }/d.length%>
+		<td class="<%=color_class(@a_a_percentage,'a_a')%>">
+			<%=@a_a_percentage%>
 		</td>		
 	</tr>
 	
 </table>
+
+
+		
 		<script type="text/javascript">
       google.load("visualization", "1", {packages:["gauge"]});
       google.setOnLoadCallback(drawChart);

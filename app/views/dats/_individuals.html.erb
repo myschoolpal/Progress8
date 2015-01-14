@@ -18,7 +18,7 @@
 				<%student_layout_hash[:ps] = d[1]%>
 			<%end%>
 			<%n+=1%>
-			<%if n%3 == 0%>
+			<%if n%5 == 0%>
 			<%if !student_layout_hash[:class_name].blank?%>
 				<%student_layout_array << student_layout_hash%>
 			<%end%>
@@ -68,14 +68,16 @@
 					<td><%=s[:result]%></td>
 					 
 					<td>
-					<%if lp<3%>
-						<div class="numberCircle_percent below_color">
-					<%elsif lp<4%>
-						<div class="numberCircle_percent one_below_color">
-					<%elsif lp<5%>
-						<div class="numberCircle_percent on_track_color">
-					<%elsif lp >=5%>
-						<div class="numberCircle_percent above_color">
+					<%if !lp.blank?%>
+						<%if lp<3%>
+							<div class="numberCircle_percent below_color">
+						<%elsif lp<4%>
+							<div class="numberCircle_percent one_below_color">
+						<%elsif lp<5%>
+							<div class="numberCircle_percent on_track_color">
+						<%elsif lp >=5%>
+							<div class="numberCircle_percent above_color">
+						<%end%>
 					<%end%>
 					<%=s[:ps]%>
 					</div>

@@ -48,8 +48,17 @@ class DatsController < ApplicationController
 			english_lit = []
 			ebacc = []
 			other = []
-			ks2_average = ((s['Maths_KS2_fine']+s['English_KS2_fine'])/2).round(1)
+			if !s['Maths_KS2_fine'].blank? && !s['English_KS2_fine'].blank?
+				ks2_average = ((s['Maths_KS2_fine']+s['English_KS2_fine'])/2).round(1)
+			else
+				ks2_average = ''
+			end
+			
+			if !s['Maths_KS2_grade'].blank? && !s['English_KS2_grade'].blank?
 			ks2_grade_average = (@ks2_number[s['Maths_KS2_grade'].upcase] +  @ks2_number[s['English_KS2_grade'].upcase])/2
+			else 
+			ks2_grade_average = ''
+			end
 			s.each do |d|
 				@student_data[d[0]]=d[1]
 				if d[0] == 'Maths_KS2_fine'
@@ -63,6 +72,8 @@ class DatsController < ApplicationController
 				if qual !=false
 					point_score = convert_grade_to_number(d[0].gsub(/-/, ' '),d[1])
 					@student_data[d[0]+' Points Score'] = point_score
+					@student_data[d[0]+' Levels of Progress'] = calculate_levels_of_progess(s['English_KS2_grade'], s['Maths_KS2_grade'], d[0], point_score)
+					@student_data[d[0]+' Value Added'] = calculate_va(@student_data['Expected Attainment 8'], point_score)
 					if qual == 'maths'
 						maths.push(point_score)
 					elsif qual == 'english'
@@ -78,19 +89,32 @@ class DatsController < ApplicationController
 					end
 				end
 			end
+			if english_lit.any?
+				english_score = calculate_highest_score_english(english.max, english_lit.max)
+				eng_score = english_score*2
+			else
+				eng_score = english_score = english.max
+				
+			end
+			
 			#Add the points scores to the main Hashes
 			@student_data['Maths_Points_Score'] = maths.max
-			@student_data['English_Points_Score'] = english.max
+			@student_data['English_Points_Score'] = english_score
 			@student_data['English_Literature_Points_Score'] = english_lit.max
-			@student_data['Other Ebacc Subjects'] = ebacc = ebacc.sort.last(3).inject{|sum,x| sum + x }
-			@student_data['Other Subjects'] =other = other.sort.last(3).inject{|sum,x| sum + x }
-			if english_lit.max >0
-			english = english.max * 2
-			end
+			@student_data['Other Ebacc Subjects'] = ebacc_score = ebacc.sort.last(3).inject{|sum,x| sum + x }
+			other = other + ebacc.sort[0..-4]
+			@student_data['Other Subjects'] =other_score = other.sort.last(3).inject{|sum,x| sum + x }
 			#Calculate Attainment 8
-			@student_data['Attainment 8'] = a8 =  (maths.max * 2) + english + ebacc + other
+			@student_data['Attainment 8'] = a8 =  (maths.max * 2) + eng_score + ebacc_score + other_score
+			if !ks2_average.blank?
 			@student_data['Progress 8'] = p8 =a8 - ks2_e_a8[ks2_average]
 			@student_data['Value Added'] = (p8.to_f/10)
+			else
+			p8 = ''
+			@student_data['Progress 8'] = ''
+			@student_data['Value Added'] = ''
+			end
+			
 			@students << @student_data
 		end
 	

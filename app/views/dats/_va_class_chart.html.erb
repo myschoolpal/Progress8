@@ -1,0 +1,38 @@
+<%va_array = []%>
+<%(0..d.length-1).each do |i|%>
+	<%va_array << {:name => d[i]['surname']+' '+d[i]['forename'], :va => d[i]['va']}%>
+<%end%>
+
+<div class="row" style="padding-top:100px;">
+	<div id="value_added_chart<%=n%>" class="rotate_90"></div>
+</div>
+		
+	<script type="text/javascript">
+		google.load("visualization", "1", {packages:["corechart"]});
+		google.setOnLoadCallback(drawChart);
+		function drawChart() {
+
+		  var data = google.visualization.arrayToDataTable([
+			['Pupil Name', 'Value Added',  { role: 'style' } ],
+			<%va_array.each do |x|%>
+			['<%=x[:name]%>', <%=x[:va]%>, '<%=va_bar_color(x[:va])%>'],
+			<%end%>
+
+		  ]);
+
+		  var options = {
+			title: 'Value Added',
+			legend:  'none',
+			height:800,
+			width:1150,
+			chartArea: {height:"50%", width: "90%", left:80, top:50},
+			hAxis: {title: 'Pupils', titleTextStyle: {color: 'black'}, direction:-1, slantedText:true, slantedTextAngle:90 },
+			vAxis: {title: 'Value Added' }
+		  };
+
+		  var chart = new google.visualization.ColumnChart(document.getElementById('value_added_chart<%=n%>'));
+
+		  chart.draw(data, options);
+
+		}
+    </script>

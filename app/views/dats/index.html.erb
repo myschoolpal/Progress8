@@ -12,3 +12,8 @@
 <%if params[:id] == 'subject'%>
 <%=render 'subject', {:students =>@students}%>
 <%end%>
+<%if params[:id] == 'both'%>
+	
+	<%=render 'subject', {:students =>@students}%>
+	<%=render 'overview', {:students =>@students}%>
+<%end%>

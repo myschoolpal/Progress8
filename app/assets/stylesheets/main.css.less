@@ -8,6 +8,19 @@ body {
 -webkit-print-color-adjust:exact;
 }
 
+.tm_matrix {
+max-height:1250px;
+width:900px;
+overflow:hidden;
+font-size:9px;
+border: 2px solid @gray;
+}
+
+.tm_matrix td {
+height:30px;
+border: 1px solid @gray;
+}
+
 .cont {
 width:960px;
 overflow:hidden;
@@ -18,14 +31,15 @@ margin-right:auto;
 .front_page {
 width:940px;
 height:1310px;
-background-color:#EDEDED;
+background-color:#fff;
 overflow:hidden;
 margin-top:10px;
 margin-bottom:10px;
 margin-left:auto;
 margin-right:auto;
-border-radius:20px;
-padding:20px;
+border-radius:0px;
+
+border:1px solid @gray;
 }
 
 .page {
@@ -39,6 +53,7 @@ border:1px solid @gray;
 padding:20px;
 }
 
+
 @media print {
 .page {
 width:958x;
@@ -47,6 +62,9 @@ margin-left:auto;
 margin-right:auto;
 margin-top:0px;
 border:0px;
+}
+.front_page {
+border:0px solid @gray;
 }
 
 }
@@ -94,30 +112,27 @@ font-size:10px;
 
 .below {
 background-color: @brand-danger;
-width:@matrix_td_width;
 border: 1px solid @tm_border;
 }
 
 .one_below {
 background-color: @brand-warning;
-width:@matrix_td_width;
 border: 1px solid @tm_border;
 }
 
 .on_target {
 background-color: @brand-success;
-width:@matrix_td_width;
 border: 1px solid @tm_border;
 }
 
 .above {
 background-color: @brand-primary !important;
-width:@matrix_td_width;
 border: 1px solid @tm_border;
 }
 
 .mini_table {
 padding:0px;
+width:100%;
 }
 
 .mini-table tr {
@@ -191,32 +206,41 @@ text-align:center;
 	margin-left:auto;
 	margin-right:auto;
     border-radius: 50%;
-    width: 28px;
-    height: 28px;
-    padding: 6px;
+    width: 24px;
+    height: 24px;
+    padding-top: 5px;
+    padding-left:1px;
     background: #fff;
     text-align: center;
-    font: 12px Arial, sans-serif;
+    font: 11px Arial, sans-serif;
     
 }
+
+.black_color {
+border:0px solid #000;
+	background-color:#000;
+	color: #fff;
+
+}
+
 .below_color{
- 	border:1px solid #000;
+ 	border:0px solid #000;
 	background-color:#d9534f;
 	color: #fff;
 }
 .one_below_color {
- 	border: 1px solid #000;
+ 	border: 0px solid #000;
  	background-color:#f0ad4e;
 	color: #fff;
 }
 .on_track_color {
- 	border: 1px solid #000;
+ 	border: 0px solid #000;
  	background-color:#5cb85c;
  	color: #fff;
 }
 
 .above_color {
-	border: 1px solid #000;
+	border: 0px solid #000;
  	background-color:#428bca;
  	color: #fff;
 }
@@ -228,3 +252,54 @@ display:none;
 margin-bottom:30px;
 }
 
+/*School overview page*/
+
+.total_content {
+	border: 3px solid #000;
+	
+	margin-left:auto;
+	margin-right:auto;
+    border-radius: 10%;
+    width:	200px;
+    height: 120px;
+    padding-top: 5px;
+    pading-left:1px;
+    text-align: center;
+}
+
+.total_title {
+font-size: 14px;
+margin-top:20px;
+}
+
+.total_score {
+margin-top:32px;
+font-size:25px;
+
+}
+
+.student_list_table {
+width:100%;
+text-align: center;
+}
+
+.student_list_table th{
+padding-bottom:4px;
+border:1px solid #eee;
+text-align: center;
+
+}
+
+.student_list_table td {
+padding-top:4px;
+padding-bottom:4px;
+border:1px solid #eee;
+}
+
+.rotate_90 {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+}

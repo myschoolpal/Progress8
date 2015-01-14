@@ -9,18 +9,20 @@
         ["Subject", "Point Score", { role: "style" } ],
         <%d.each do |s|%>
         	<%lp = calculate_levels_of_progess(en_ks2, ma_ks2, s[:title], s[:ps])%>
-        	<%if lp <0%>
-				['<%=s[:title].gsub(/-/, ' ')%>',  <%=s[:ps]%>,'#000000'],
-			<%elsif lp <3%>
-         	 	['<%=s[:title].gsub(/-/, ' ')%>',  <%=s[:ps]%>,'#d9534f'],
-         	<%elsif lp <4%>
-         		['<%=s[:title].gsub(/-/, ' ')%>',  <%=s[:ps]%>,'#f0ad4e'],
-         	<%elsif lp <5 %>
-         		['<%=s[:title].gsub(/-/, ' ')%>',  <%=s[:ps]%>,'#5cb85c'],
-         	<%elsif lp >=5%>
-         		['<%=s[:title].gsub(/-/, ' ')%>',  <%=s[:ps]%>,'#428bca'],
-         	<%end%>
-       
+        		<%if lp.blank?%>
+        			['<%=s[:title].gsub(/-/, ' ')%>',  <%=s[:ps]%>,'#5cb85c'],
+				<%elsif lp <0%>
+					['<%=s[:title].gsub(/-/, ' ')%>',  <%=s[:ps]%>,'#000000'],
+				<%elsif lp <3%>
+					['<%=s[:title].gsub(/-/, ' ')%>',  <%=s[:ps]%>,'#d9534f'],
+				<%elsif lp <4%>
+					['<%=s[:title].gsub(/-/, ' ')%>',  <%=s[:ps]%>,'#f0ad4e'],
+				<%elsif lp <5 %>
+					['<%=s[:title].gsub(/-/, ' ')%>',  <%=s[:ps]%>,'#5cb85c'],
+				<%elsif lp >=5%>
+					['<%=s[:title].gsub(/-/, ' ')%>',  <%=s[:ps]%>,'#428bca'],
+				<%end%>
+       		
         <%end%>
       ]);
 
@@ -29,6 +31,7 @@
         title: "Points Score per Subject",
        height:400,
        chartArea: {height:'90%', top:20, left:400},
+       hAxis: { direction:-1, slantedText:true, slantedTextAngle:90 },
         bar: {groupWidth: "95%"},
         legend: { position: "none" },
       };
