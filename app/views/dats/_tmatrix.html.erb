@@ -17,18 +17,18 @@
 				<th class="title_td">A*</th>
 	
 			</tr>
-			<%for l in 0..18%>
+			<%@ks2_number.each do |s| %>
 
 
 				<tr>
-					<td class="title_td"><%=@ks2_number.index(l)%></td>
+					<td class="title_td"><%=s[0]%></td>
 					<%for j in 0..8%>
 						<%n=0%>
 						<%names = Array.new()%>
 							
 								<%for i in 0..d.length-1%>
 									<%if d[i]['grade'] && d[i]['ks2']%>
-										<%if d[i]['grade']==j && d[i]['ks2']==l%>
+										<%if d[i]['grade']==j && d[i]['ks2']==s[1]%>
 											<p class="tm_text">
 												<%names << d[i]['surname'].to_s + ' ' + d[i]['forename'].to_s %>
 											</p>

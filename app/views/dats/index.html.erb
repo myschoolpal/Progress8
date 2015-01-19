@@ -17,3 +17,6 @@
 	<%=render 'subject', {:students =>@students}%>
 	<%=render 'overview', {:students =>@students}%>
 <%end%>
+<%if params[:id] == 'front'%>
+	<%=render 'front_page'%>
+<%end%>

@@ -15,6 +15,10 @@ class DatsController < ApplicationController
   
   def index
  
+ 	@one_below = [95,104,113,67,76,85,39,48,57,11,20,29,1,123,132,141,151,160,169]
+	@on_target = [2,12,21,30,40,49,58,68,77,86,96,105,114,124,133,142,152,161,170]
+@above = [3,4,5,6,7,8,13,14,15,16,17,22,23,24,25,26,31,32,33,34,35,41,42,43,44,50,51,52,53,59,60,61,62,69,70,71,78,79,80,87,88,89,97,98,106,107,115,116,125,134,143]
+
     #Conversion of ks2 to Expected Attainment 8
     
     ks2_e_a8 = {1.5=>13,1.6=>15, 1.7=>15,1.8=>15,1.9=>15,2.0=>15,2.1=>17,2.2=>17,2.3=>17,
@@ -36,7 +40,7 @@ class DatsController < ApplicationController
     
 	details = ['Surname', 'Forename','PP' , 'SEN', 'EAL', 'English_KS2_fine', 'Maths_KS2_fine', 'English_KS2_grade', 'Maths_KS2_grade']
 	@display_details = ['Surname', 'Forename','PP' , 'SEN', 'EAL', 'Exp A8', 'Eng KS2', 'Ma KS2','Avg KS2']
-	json = File.read('public/data.json')
+	json = File.read('public/dataSmall.json')
 	data = JSON.parse(json)
 
 		@students =[]

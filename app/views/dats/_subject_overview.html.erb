@@ -1,12 +1,12 @@
-<div class="page">
+	<div class="page">
 		<p class="qual_title">Subject Overview</p>
 		
 		<table class="table">
 			<tr>
 				<th>Qualification</th>
-				<th>APS</th>
-				<th>LP</th>
-				<th>VA</th>
+				<th class="text-center">APS</th>
+				<th class="text-center">LP</th>
+				<th class="text-center">VA</th>
 				
 			</tr>
 		<%va_array = []%>
@@ -23,10 +23,14 @@
 			<tr>
 		<%end%>
 		</table>
+		<%=render 'footer', {:p =>p}=%>
+		<%p+=1%>
 	</div>
 	<div class="page">
 		<p class="qual_title">Value Added Score By Subject</p>
 		<%=render 'va_chart', {:data => va_array, :va_count => va_count}%>
+		<%=render 'footer', {:p =>p}=%>
+		<%p+=1%>
 	</div>
 	<div class="page">
 		<p class="qual_title">Subject Overview</p>
@@ -34,11 +38,15 @@
 		<div style="width: 900px; height: 600px;" id='lp_overview_chart'></div>	
 		<p class="class_title">Value Added Score by Subject</p>
 		<div style="width: 900px; height: 600px;" id='va_overview_chart'></div>	
+		<%=render 'footer', {:p =>p}=%>
+		<%p+=1%>
 	</div>
 	<div class="page">
 		<p class="qual_title">Subject Overview</p>
 		<p class="class_title">Average Point Score by Subject</p>
 		<div style="width: 900px; height: 600px;" id='ps_overview_chart'></div>	
+		<%=render 'footer', {:p =>p}=%>
+		<%p+=1%>
 	</div>
 	<div class="page">
 		<p class="qual_title">Subject Overview - A* - C</p>
@@ -64,6 +72,8 @@
 			</tr>
 		<%end%>
 		</table>
+		<%=render 'footer', {:p =>p}=%>
+		<%p+=1%>
 	</div>
 	
 	

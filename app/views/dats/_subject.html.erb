@@ -1,9 +1,9 @@
 
-<%require 'descriptive_statistics'%>
+
 <style>
 
 </style>
-
+<%p =1%>
 <%n=1%>
 <%va_count=1%>
 <div class="cont">
@@ -151,11 +151,12 @@
 					<%end%>
 				<%end%>
 				</table>
-				
+				<%=render 'footer', {:p =>p}=%>
+				<%p+=1%>
 			</div>
 			<div class="page">
 			
-			<p class="qual_title">Summary Statistics - <%=class_name.upcase%></p>
+				<p class="qual_title">Summary Statistics - <%=class_name.upcase%></p>
 				<%=draw_summary_table(class_name,s,@students)%>
 				
 						 
@@ -171,37 +172,42 @@
 						<%=render 'ac_chart', {:d =>d, :n=>n}=%>
 					</div>
 				</div>
+				<%=render 'footer', {:p =>p}=%>
+				<%p+=1%>
 			</div>
 			<div class="page">
 				<p class="qual_title">Value Added Chart - <%=class_name.upcase%></p>
 				<%=render 'va_class_chart', {:d =>d, :n=>n}=%>
+				<%=render 'footer', {:p =>p}=%>
+				<%p+=1%>
 			</div>
 				<%n+=1%>
 			<div class="page">
 				<p class="qual_title">Transition Matrix - <%=class_name.upcase%></p>
 				<%=render 'tmatrix', :d => d%>
+				<%=render 'footer', {:p =>p}=%>
+				<%p+=1%>
 			</div>
 		<%end%>
 		<div class="page">
 			<p class="qual_title">Summary Statistics - <%=s.gsub(/-/, ' ')%></p>
 			<%=draw_summary_table('subject',s,@students)%>
-			
-					
 		
-
 			 <div class="row">
 					<%=render 'lp_piechart', {:d => subject_data, :n =>n }%>
+			</div>
+			<hr>
+			<div class="row">
+				<div class="col-xs-6">
+					<%=render 'mini_tmatrix', {:d =>subject_data, :n =>n}%>
 				</div>
-				<hr>
-				<div class="row">
-					<div class="col-xs-6">
-						<%=render 'mini_tmatrix', {:d =>subject_data, :n =>n}%>
-					</div>
-					<div class="col-xs-6">
-						<%=render 'ac_chart', {:d =>subject_data, :n=>n}=%>
-					</div>
+				<div class="col-xs-6">
+					<%=render 'ac_chart', {:d =>subject_data, :n=>n}=%>
 				</div>
-			 </div>
+			</div>
+			<%=render 'footer', {:p =>p}=%>
+				<%p+=1%>
+		 </div>
 			<%lp = calculate_average_from_hash('subject', s, 'all', @students, 'lp')%>
 			<%sub_va = calculate_average_from_hash('subject', s, 'all', @students, 'va')%>
 			<%sub_ps = calculate_average_from_hash('subject', s, 'all', @students, 'ps')%>
@@ -253,6 +259,8 @@
 						<%else%>
 							<h5>There are no pupils making less than 3 levels of progress in this subject.</h5>
 						<%end%>
+						<%=render 'footer', {:p =>p}=%>
+						<%p+=1%>
 				</div>
 			<%end%>
 			<%va_count_pages = below_va.count/30%>
@@ -285,12 +293,14 @@
 						<%else%>
 							<h5>There are no pupils with a Value Added Score of 0 or less in this subject.</h5>
 						<%end%>
+						<%=render 'footer', {:p =>p}=%>
+						<%p+=1%>
 				</div>
 			<%end%>
 			
 		<%end%>
 	</div>
 	
-	<%=render 'subject_overview', {:data => subject_overall_data, :va_count=>va_count}%>
+	<%=render 'subject_overview', {:data => subject_overall_data, :va_count=>va_count, :p => p}%>
 	
 </div>
