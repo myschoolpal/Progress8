@@ -278,7 +278,7 @@
 									<td><%=pupil['forename']%></td>
 									<td><%=@ks2_number.key(pupil['ks2'])%></td>
 									<td><%=pupil['grade']%> (<%=@grade_score.key(pupil['grade'])%>)</td>
-									<td><%=pupil['va']%></td>
+									<td class='<%=color_div_va(pupil['va'])%>'><%=pupil['va']%></td>
 								</tr>
 							<%end%>
 							</table>

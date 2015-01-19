@@ -26,18 +26,26 @@ font-size:90px;
  margin-top:20px;
  padding:40px;
  font-size:50px;
- color:#d9534f;
+ color:#333;
+ height:230px;
 }
 .front_page .main_text {
- margin-top:75px;
+ margin-top:200px;
  padding-left:40px;
- background-color:#5bc0de;
- height:650px;
+ background-color:#fff;
+ height:525px;
 }
+
+
 
 .front_page .main_list {
 margin-left:40px;
-font-size:30px;
+font-size:20px;
+}
+
+.front_page .main_list .list_item {
+
+margin-top:30px;
 }
 .front_page .text_block {
 margin-top:80px;
@@ -52,6 +60,7 @@ margin-top:80px;
 	box-shadow: 10px 10px 5px #888888;
 	float:right;
 }
+
 .text_section {
 padding-top:30px;
 position:relative;
@@ -62,9 +71,16 @@ float:top;
 padding-left:0px;
 padding-right:60px;
 }
+.base_text {
+width:100%;
+padding-right:40px;
+margin-top:175px;
+
+}
+
 </style>
 <div class="front_page">
-		<div class="top_bar">
+		<div class="top_bar hidden">
 			<div class="col-xs-1">
 				<div class="bar_chart_design on_track_color" style="height:70px;"></div>
 			</div>
@@ -104,45 +120,39 @@ padding-right:60px;
 		</div>
 		<div class="logo_area">
 			<div class="col-xs-6 col-xs-offset-6 text-center">
-				<p class="logo"><span class="first_letter_logo">S</span>M Data</p>
+				<%=image_tag("logo_red.png")%>
 			</div>
 		</div>
 		<div class="main_heading">
-			Providing a consistent approach to supporting all pupils.
+			SMD Report - Example Secondary School
+			<br />
+			<small>December 2014</small>
 		</div>
 		<div class="main_text">
 			
 			<div class="row text_section">
 				
 				<div class="col-xs-6">
-					<div class="text_column">
-						<h3>Fast Turnaround</h3>
-						Lorem ipsum dolor sit amet, dolor libero est pharetra in nisl. Ipsum mollis ut, parturient mi platea, 
-						dolor ante at et. Venenatis nam magna culpa sodales orci, lacinia amet turpis tellus, phasellus nibh cras, amet ac nullam elit
-						 nunc felis metus, vitae maecenas sit in massa suspendisse faucibus. In lacus lacinia mauris sed, nulla vitae luctus, et quis, 
-						 sapien quis imperdiet id, sed in proin vel. Vestibulum etiam elit mauris, wisi neque magna nulla viverra, vivamus urna maecenas.
-						 Nonummy convallis sit quisque ut neque tincidunt, mattis erat lorem, tempor tristique diam ut libero, tristique adipiscing. Viverra mauris leo enim.
-						 
-						 <h3>Consistent Approach</h3>
-						Lorem ipsum dolor sit amet, dolor libero est pharetra in nisl. Ipsum mollis ut, parturient mi platea, 
-						dolor ante at et. Venenatis nam magna culpa sodales orci, lacinia amet turpis tellus, phasellus nibh cras, amet ac nullam elit
-						 nunc felis metus, vitae maecenas sit in massa suspendisse faucibus. In lacus lacinia mauris sed, nulla vitae luctus, et quis, 
-						 sapien quis imperdiet id, sed in proin vel. Vestibulum etiam elit mauris, wisi neque magna nulla viverra, vivamus urna maecenas.
-						 Nonummy convallis sit quisque ut neque tincidunt, mattis erat lorem, tempor tristique diam ut libero, tristique adipiscing. Viverra mauris leo enim.
-					 </div>
+					
+					<ul class="list-unstyled main_list">
+						<li class="list_item"><i class='fa fa-chevron-circle-right'></i> Progress 8</li>
+						<li class="list_item"><i class='fa fa-chevron-circle-right'></i> Attainmant 8</li>
+						<li class="list_item"><i class='fa fa-chevron-circle-right'></i> Levels of Progress</li>
+						<li class="list_item"><i class='fa fa-chevron-circle-right'></i> Transition Matrices</li>
+						<li class="list_item"><i class='fa fa-chevron-circle-right'></i> PP, SEN &amp; EAL</li>
+						<li class="list_item"><i class='fa fa-chevron-circle-right'></i> Intervention Identified</li>
+					</ul>
+						
 				 </div>
 				<div class="col-xs-6 text_column"><%=image_tag("pie_chart.png", class: "front_page_graph")%>
-					<div>
-						<h3>Intervention </h3>
-						Lorem ipsum dolor sit amet, dolor libero est pharetra in nisl. Ipsum mollis ut, parturient mi platea, 
-						dolor ante at et. Venenatis nam magna culpa sodales orci, lacinia amet turpis tellus, phasellus nibh cras, amet ac nullam elit
-						 nunc felis metus, vitae maecenas sit in massa suspendisse faucibus. In lacus lacinia mauris sed, nulla vitae luctus, et quis, 
-						 sapien quis imperdiet id, sed in proin vel. Vestibulum etiam elit mauris, wisi neque magna nulla viverra, vivamus urna maecenas.
-						 Nonummy convallis sit quisque ut neque tincidunt, mattis erat lorem, tempor tristique diam ut libero, tristique adipiscing. Viverra mauris leo enim.
-					</div>
+					
 				</div>
-</div>
 				
+</div>
+				<div class="base_text text-right">
+				
+					SmartMove Data Report - December 2014
+				</div>
 			</div>
 		</div>
 	

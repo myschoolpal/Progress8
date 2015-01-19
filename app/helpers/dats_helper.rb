@@ -35,21 +35,52 @@ module DatsHelper
 		end
 	end
 	
+	def five_A_C(arr)
+		maths_pupils = arr.select {|arr| arr['Maths_Points_Score'] >= 5}.count
+		eng_pupils = arr.select {|arr| arr['English_Points_Score'] >= 5}.count
+		pupils = arr.select {|arr| arr['Maths_Points_Score'] >= 5 && arr['English_Points_Score'] >= 5}.count
+		content_tag(:table, class: 'table table-bordered text-center') do
+			concat( content_tag(:tr) do 
+				concat content_tag(:th, '', class: 'text-center')
+				concat content_tag(:th, 'Maths', class: 'text-center')
+				concat content_tag(:th, 'English', class: 'text-center')
+				concat content_tag(:th, 'Combined Maths & English', class: 'text-center')
+			end)
+			concat( content_tag(:tr) do 
+				concat content_tag(:th, 'Number of Pupils', class: 'text-center')
+				concat content_tag(:td, maths_pupils)
+				concat content_tag(:td, eng_pupils)
+				concat content_tag(:td, pupils)
+			end)
+			concat( content_tag(:tr) do 
+				concat content_tag(:th, 'Percentage of Pupils', class: 'text-center')
+				concat content_tag(:td, (maths_pupils*100/arr.count).to_s+' %')
+				concat content_tag(:td, (eng_pupils*100/arr.count).to_s+' %')
+				concat content_tag(:td, (pupils*100/arr.count).to_s+' %')
+			end)
+		end
+					
+	end
+	
 	# Draws a summary table of the schools overview with pp, sen and EAL included
 	def school_summary_table(arr)
-		h = ['Expected Attainment 8','Maths_Points_Score','English_Points_Score','Other Ebacc Subjects','Other Subjects','Attainment 8','Progress 8','Value Added']
+		th = ['Expected Attainment 8','Maths Points Score','English Points Score','Other Ebacc Subjects','Other Subjects','Attainment 8','Progress 8']
+		h = ['Expected Attainment 8','Maths_Points_Score','English_Points_Score','Other Ebacc Subjects','Other Subjects','Attainment 8','Value Added']
 	 	m = ['na','PP','SEN','EAL']
 	 	title = ['All Pupils','PP','SEN','EAL']
-	 	content_tag(:table, class: 'table') do
+	 	i = 0
+	 	content_tag(:table, class: 'table table-bordered text-center') do
 			concat( content_tag(:tr) do 
 				concat content_tag(:th)
-				title.each { |t| concat content_tag(:th, t)}
+				title.each { |t| concat content_tag(:th, t, class: 'text-center')}
 			end)
+			
 			h.each do |h| 
 				concat( content_tag(:tr) do 
-					concat content_tag(:td,h)
+					concat content_tag(:td,th[i])
 					m.each { |m| concat content_tag(:td,calc_avg_school(arr,h,m),class: color_div_total(calc_avg_school(arr,h,m),calc_avg_school(arr,'Expected Attainment 8',m),h))}
 				end)
+				i+=1
 			end
 	 	end
 	end
@@ -124,17 +155,17 @@ module DatsHelper
 	#Create value added hash for statistical significance graph
 	def create_va_hash(arr)
 		title = ['na','PP','SEN','EAL']
-		va_full_hash={}
-		for h in title
+		va_full_array=[]
+		for h in title.reverse
 		va_total = calc_avg_school(arr,'Value Added',h)
-		ci = 1.96 * 1.14/ Math.sqrt(calc_number_pupils_school(@students,'na'))
+		ci = 1.96 * 1.14/ Math.sqrt(calc_number_pupils_school(@students,h))
 		up_va_total = (va_total + ci).round(2)
 		lo_va_total = (va_total - ci).round(2)
-		va_hash = [{:title => 'School Overview',:va => va_total,:up_va => up_va_total, :lo_va => lo_va_total}]
-		va_full_hash[h.parameterize.to_sym] = va_hash
+		va_hash = {:title => h == 'na' ? 'Whole School' : h ,:va => va_total,:up_va => up_va_total, :lo_va => lo_va_total}
+		va_full_array.push(va_hash)
 		end
 			
-		return va_full_hash
+		return va_full_array
 		
 	end
 	

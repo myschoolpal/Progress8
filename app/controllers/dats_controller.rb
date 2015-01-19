@@ -93,7 +93,11 @@ class DatsController < ApplicationController
 				english_score = calculate_highest_score_english(english.max, english_lit.max)
 				eng_score = english_score*2
 			else
-				eng_score = english_score = english.max
+				if english.any?
+					eng_score = english_score = english.max
+				else
+					eng_score = english_score =0
+				end
 				
 			end
 			

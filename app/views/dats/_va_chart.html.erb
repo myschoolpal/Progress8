@@ -1,6 +1,7 @@
 <%if va_count >  9999999995%>
-<%h_percent = "93%"%>
-<%height = 300%>
+<%h_percent = "60%"%>
+<%height = 400%>
+<%axis_title = 'Progress 8 Score'%>
 <%else%>
 <%h_percent = "40%"%>
 <%height = 700%>
@@ -11,6 +12,7 @@
 <script type="text/javascript">
     var h_percent = '<%=h_percent%>';
     var h = <%=height%>;
+    var axis_title =  '<%=axis_title%>';
       google.load("visualization", "1", {packages:["corechart"]});
       google.setOnLoadCallback(drawChart);
       function drawChart() {
@@ -31,7 +33,7 @@
         // The intervals data as narrow lines (useful for showing raw source data)
        var options_bars = {
         title: '',
-        vAxis: {title: "Value Added",
+        vAxis: {title: '<%=axis_title%>',
          viewWindow:{
                 max:5,
                 min:-5
