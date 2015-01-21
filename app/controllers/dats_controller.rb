@@ -40,7 +40,7 @@ class DatsController < ApplicationController
     
 	details = ['Surname', 'Forename','PP' , 'SEN', 'EAL', 'English_KS2_fine', 'Maths_KS2_fine', 'English_KS2_grade', 'Maths_KS2_grade']
 	@display_details = ['Surname', 'Forename','PP' , 'SEN', 'EAL', 'Exp A8', 'Eng KS2', 'Ma KS2','Avg KS2']
-	json = File.read('public/dataSmall.json')
+	json = File.read('public/data.json')
 	data = JSON.parse(json)
 
 		@students =[]

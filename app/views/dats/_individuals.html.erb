@@ -3,7 +3,7 @@
 </script>
 <%a=0%>
 <div class="cont">
-	<%@students.each do |student|%>
+	<%@students.sort_by { |hsh| hsh['Forename'] }.each do |student|%>
 		
 		<%student_layout_array =[]%>
 		<%student_layout_hash ={}%>
