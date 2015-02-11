@@ -1,28 +1,22 @@
-<%p =8%>
+<%p =1%>
 <%n=1%>
 <%va_count=1%>
 <div class="cont">
 	<%=render 'front_page'%>
 	<%=render 'contents'%>
-	<%=render 'content_description'%>
-	
 	<div class="">
 	<%subject_overall_data=[]%>
 	<%@subject_titles.each do |s|%>
-		<%=render 'subject_page', {:subject => s}%>
-		<%=p%>
-				<%p+=1%>
 		<%subject_summary_hash ={}%>
 		<%classes = @students.map { |x| x[s+'_Class'].upcase }.uniq.reject(&:empty?).sort%>
 		<%qualification_title =s.gsub(/-/, ' ')%>
 		<br />
 		<%subject_data= []%>
 		<%classes.each do |class_name| %>
-			<%d = []%>
+		<%d = []%>
 			<div class="page">
-				<h3><%=qualification_title%></h3>
-				<h4><strong>Class: </strong><%=class_name.upcase%></h4>
-				<hr>
+				<p class="qual_title"><%=qualification_title%></p>
+				<p class="class_title"><strong>Class: </strong><%=class_name.upcase%></p>
 				<table class="student_list_table">
 					<tr >
 						<%@display_details.each do |disp|%>
@@ -51,91 +45,61 @@
 						<%subject_data<<a%>
 				<%end%>
 				</table>
-				<%=p%>
+				<%=render 'footer', {:p =>p}=%>
 				<%p+=1%>
 			</div>
 			<div class="page">
 			
-				<h3>Summary Statistics - <%=class_name.upcase%></h3>
-				<hr>
+				<p class="qual_title">Summary Statistics - <%=class_name.upcase%></p>
 				<%=draw_summary_table(class_name,s,@students)%>
-				<hr>	 
-					<%=render 'lp_piechart', {:d => d, :n =>n }%>
-					<%=p%>
-				<%p+=1%>
-			</div>
-			<div class="page">
-				<h3>Summary Statistics - <%=class_name.upcase%></h3>
-				<hr>
-					<%=render 'smid_lp_chart', {:d => d, :n =>n }%>
-				<hr>
+				
+						 
 				<div class="row">
-					<div class="col-xs-12" >
-						<%=render 'mini_tmatrix', {:d =>d, :n =>n}%>
-					</div>
+					<%=render 'lp_piechart', {:d => d, :n =>n }%>
 				</div>
 				<hr>
-				
-				<%=p%>
-				<%p+=1%>
-			</div>
-			<div class="page">
-				<h3>Summary Statistics - <%=class_name.upcase%></h3>
-				<hr>
 				<div class="row">
-					<div class="col-xs-12">
+					<div class="col-xs-6" >
+						<%=render 'mini_tmatrix', {:d =>d, :n =>n}%>
+					</div>
+					<div class="col-xs-6">
 						<%=render 'ac_chart', {:d =>d, :n=>n}%>
 					</div>
 				</div>
-				<hr>
-				<h3>Progress 8 score per pupil - <%=class_name.upcase%></h3>
+				<%=render 'footer', {:p =>p}=%>
+				<%p+=1%>
+			</div>
+			<div class="page">
+				<p class="qual_title">Value Added Chart - <%=class_name.upcase%></p>
 				<%=render 'va_class_chart', {:d =>d, :n=>n}=%>
-				<%=p%>
+				<%=render 'footer', {:p =>p}=%>
 				<%p+=1%>
 			</div>
 				<%n+=1%>
 			<div class="page">
-				
+				<p class="qual_title">Transition Matrix - <%=class_name.upcase%></p>
 				<%=render 'tmatrix', :d => d%>
-				<%=p%>
+				<%=render 'footer', {:p =>p}=%>
 				<%p+=1%>
 			</div>
 		<%end%>
 		<div class="page">
-			<h3>Summary Statistics - <%=s.gsub(/-/, ' ')%></h3>
-			<hr>
+			<p class="qual_title">Summary Statistics - <%=s.gsub(/-/, ' ')%></p>
 			<%=draw_summary_table('subject',s,@students)%>
-			<%=render 'lp_piechart', {:d => subject_data, :n =>n }%>
-			<%=p%>
-				<%p+=1%>
-		</div>
-		<div class="page">
-			<h3>Summary Statistics - <%=s.gsub(/-/, ' ')%></h3>
+		
+			 <div class="row">
+					<%=render 'lp_piechart', {:d => subject_data, :n =>n }%>
+			</div>
 			<hr>
 			<div class="row">
-				<div class="col-xs-12">
-					<%=render 'smid_lp_chart', {:d => subject_data, :n =>n }%>
-					<hr>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12">
+				<div class="col-xs-6">
 					<%=render 'mini_tmatrix', {:d =>subject_data, :n =>n}%>
 				</div>
-			</div>
-			<%=p%>
-				<%p+=1%>
-		</div>
-		<div class="page">
-			<h3>Summary Statistics - <%=s.gsub(/-/, ' ')%></h3>
-			<hr>
-			<div class="row">
-				<div class="col-xs-12">
+				<div class="col-xs-6">
 					<%=render 'ac_chart', {:d =>subject_data, :n=>n}=%>
 				</div>
 			</div>
-			<%=p%>
-				
+			<%=render 'footer', {:p =>p}=%>
 				<%p+=1%>
 		 </div>
 			<%lp = calculate_average_from_hash('subject', s, 'all', @students, 'lp')%>
@@ -162,8 +126,8 @@
 			<%lp_count_pages = below_lp.count/31%>
 			<%for i in 0..lp_count_pages%>
 				<div class="page">
-					<h3>LP Key Pupils - <%=qualification_title%></h3>
-					<hr>
+					<p class="qual_title">Key Target Areas - <%=qualification_title%></p>
+					<p class="class_title">Levels of Progress</p>
 					<h5>The pupils listed below have all been identified as key pupils for support. </h5>
 					<br />
 					
@@ -189,15 +153,15 @@
 						<%else%>
 							<h5>There are no pupils making less than 3 levels of progress in this subject.</h5>
 						<%end%>
-						<%=p%>
+						<%=render 'footer', {:p =>p}=%>
 						<%p+=1%>
 				</div>
 			<%end%>
 			<%va_count_pages = below_va.count/30%>
 			<%for i in 0..va_count_pages%>
 				<div class="page">
-					<h3>P8 Key Pupils - <%=qualification_title%></h3>
-					<hr>
+					<p class="qual_title">Key Target Areas - <%=qualification_title%></p>
+					<p class="class_title">Value Added</p>
 					<h5>The pupils listed below have all been identified as key pupils for support. </h5>
 				
 					
@@ -223,7 +187,7 @@
 						<%else%>
 							<h5>There are no pupils with a Value Added Score of 0 or less in this subject.</h5>
 						<%end%>
-						<%=p%>
+						<%=render 'footer', {:p =>p}=%>
 						<%p+=1%>
 				</div>
 			<%end%>

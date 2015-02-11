@@ -17,9 +17,9 @@
 			<%va_array << va_hash%>
 			<tr>
 				<td><%=s[:name]%></td>
-				<td><div class='numberCircle <%=color_div_ps(s[:ps])%>'><%=s[:ps]%></div></td>
-				<td><div class='numberCircle <%=color_div_lp(s[:lp])%>'><%=s[:lp]%></div></td>
-				<td><div class='numberCircle <%=color_div_va(s[:va])%>'><%=s[:va]%></div></td>
+				<td><div class='numberCircle <%=color_div_ps(s[:ps])%>'><%=s[:ps].round(1)%></div></td>
+				<td><div class='numberCircle <%=color_div_lp(s[:lp])%>'><%=s[:lp].round(1)%></div></td>
+				<td><div class='numberCircle <%=color_div_va(s[:va])%>'><%=s[:va].round(1)%></div></td>
 			<tr>
 		<%end%>
 		</table>
@@ -27,8 +27,8 @@
 		<%p+=1%>
 	</div>
 	<div class="page">
-		<p class="qual_title">Value Added Score By Subject</p>
-		<%=render 'va_chart', {:data => va_array, :va_count => va_count}%>
+		<p class="qual_title">Progress 8 Score By Subject</p>
+		<%=render 'va_chart_subject', {:data => va_array, :va_count => 1}%>
 		<%=render 'footer', {:p =>p}=%>
 		<%p+=1%>
 	</div>
@@ -36,7 +36,7 @@
 		<p class="qual_title">Subject Overview</p>
 		<p class="class_title">Levels of Progress by Subject</p>
 		<div style="width: 900px; height: 600px;" id='lp_overview_chart'></div>	
-		<p class="class_title">Value Added Score by Subject</p>
+		<p class="class_title">Progress 8 Score by Subject</p>
 		<div style="width: 900px; height: 600px;" id='va_overview_chart'></div>	
 		<%=render 'footer', {:p =>p}=%>
 		<%p+=1%>
@@ -53,21 +53,21 @@
 		<table class="table">
 			<tr>
 				<th>Qualification</th>
-				<th>A* - G (%)</th>
-				<th>A* - C (%)</th>
-				<th>A* - A (%)</th>
+				<th class="text-center">A* - G (%)</th>
+				<th class="text-center">A* - C (%)</th>
+				<th class="text-center">A* - A (%)</th>
 			</tr>
 		<%data.each do |s|%>
 			<tr>
 				<td><%=s[:name]%></td>
 				<td>
-				<div class="numberCircle_percent <%=color_class(s[:a_g],'a_g')%>">
+				<div class="numberCircle <%=color_class(s[:a_g],'a_g')%>">
 				<%=s[:a_g]%></div></td>
 				<td>
-				<div class="numberCircle_percent <%=color_class(s[:a_c],'a_c')%>">
+				<div class="numberCircle <%=color_class(s[:a_c],'a_c')%>">
 				<%=s[:a_c]%></div></td>
 				<td>
-				<div class="numberCircle_percent <%=color_class(s[:a_a],'a_a')%>">
+				<div class="numberCircle <%=color_class(s[:a_a],'a_a')%>">
 				<%=s[:a_a]%></div></td>
 			</tr>
 		<%end%>
@@ -140,7 +140,7 @@
           vAxis: {title: "",  titleTextStyle: {color: 'red'}, textStyle: {fontSize: 12}},
           chartArea: {  width: "50%", height: "90%", left:450, top:0 },
            legend: 'none',
-          hAxis: {title: 'Value Added',  titleTextStyle: {color: 'grey'}}
+          hAxis: {title: 'Progress 8 Score',  titleTextStyle: {color: 'grey'}}
         };
 
         var chart = new google.visualization.BarChart(document.getElementById('va_overview_chart'));

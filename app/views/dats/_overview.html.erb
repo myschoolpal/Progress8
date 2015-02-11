@@ -12,9 +12,10 @@ width:700px;
 	<%count_pages = @students.count/34%>
 	<%for i in 0..count_pages%>
 		<div class="page">
-			<p class="qual_title"%>Progress 8 - All Pupils</p>
-			<p class="class_title"><%=count_pages >1 ? 'Page '+(i+1).to_s : ''%></p>
-			<p class="text">A list of all pupils with their respective Progress 8 scores ranked in ascending order. Designed to provide an overview of where imediate action should be taken and which 
+			<h3>Progress 8 - All Pupils</h3>
+			<hr>
+			<h4><%=count_pages >1 ? 'Page '+(i+1).to_s : ''%></h4>
+			<p>A list of all pupils with their respective Progress 8 scores ranked in ascending order. Designed to provide an overview of where imediate action should be taken and which 
 			subject areas should be the principle focus.</p>
 			<table class="student_list_table">
 				<tr>
@@ -78,8 +79,9 @@ width:700px;
 	<%count_eng_lit_pages = no_e_lit_arr.count/34%>
 	<%for i in 0..count_eng_lit_pages%>
 		<div class="page">
-			<p class="qual_title"%>Pupils with no English Literature</p>
-			<p class="text"%>These pupils have been identified as having no English Literature Score. The new scores are based on the pupils taking English Literature and therefore
+			<h3>Pupils with no English Literature</h3>
+			<hr>
+			<p>These pupils have been identified as having no English Literature Score. The new scores are based on the pupils taking English Literature and therefore
 			providing a double weighting to the current English Score.</p>
 			<table class="student_list_table">
 				<tr>
@@ -120,20 +122,22 @@ width:700px;
 		</div>
 	<%end%>
 	<div class="page">
-	<p class="qual_title"%>School Summary Page</p>
-		<p class="class_title"%>School Averages</p>
-		<p class="text">These are designed to give a clear idea of how your school is performing across all subjects and pupil groups.</p>
+	<h3>School Summary Page</h3>
+	<hr>
+		<h4>School Averages</h4>
+		
+		<p>These are designed to give a clear idea of how your school is performing across all subjects and pupil groups.</p>
 		<%=school_summary_table(@students)%>
 		<%va_array = create_va_hash(@students)%>
 		<div class="row">
 			<div class="col-xs-12">
-				<p class="class_title" style="margin-top:20px;">A* - C in both Maths and English</p>
-				<p class="text">This table shows the number of pupils achieving A*-C grades in Maths and English seperatley and then the number achieveing these grades in both subjects.</p>
+				<h4>A* - C in both Maths and English</h4>
+				<p>This table shows the number of pupils achieving A*-C grades in Maths and English seperatley and then the number achieveing these grades in both subjects.</p>
 				 <%=five_A_C(@students)%> 
 			</div>
 		</div>
-		<p class="class_title" style="margin-top:20px;">Statistical Significance</p>
-		<p class="text">The statisitcal significance is calculated using the standard deviation of the Progress 8 scores for all eligible pupils nationally. The value that has been used to 
+		<h4>Statistical Significance</h4>
+		<p>The statisitcal significance is calculated using the standard deviation of the Progress 8 scores for all eligible pupils nationally. The value that has been used to 
 		calculate the significance in this case has been taken from the example provided in the technical guide issued by the DFE. This will evidently change year on year therefore the significance 
 		calculation can not be guaranteed for any particular year.</p>
 		<ul>
@@ -144,7 +148,7 @@ width:700px;
 		</ul>
 		<div class="row text-center" style="margin-top:20px;">
 			<div class="col-xs-12">
-				<p class="class_title">Progress 8 measure for all pupil groups</p>
+				<h4>Progress 8 measure for all pupil groups</h4>
 				<div class="chart_container">
 					<%=render 'va_chart', {:data => va_array, :va_count => 9999999996}%>
 				</div>

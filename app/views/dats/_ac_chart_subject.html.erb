@@ -3,25 +3,13 @@
 	<%grade_array << d[i]['grade'].to_i%>
 <%end%>  
 <%require 'descriptive_statistics'%>
-<h3>SMIDometer</h3>
+
 <div class="row">
-	<div class="col-xs-12">
-		<div class="row">
-			<div class="col-xs-4 text-center">  
-				<div id="gaugeAG_div<%=n%>" ></div>
-			</div>
-			<div class="col-xs-4 text-center">  
-				<div id="gaugeAC_div<%=n%>"></div>
-			</div>
-			<div class="col-xs-4 text-center">
-				<div id="gaugeAA_div<%=n%>"></div>
-			</div>
-		</div>
+	<div class="col-xs-6">	
+		<h4>A*-G , A*-C & A* - A</h4>
 	</div>
-</div>
-<div class="row">
-	<div class="col-xs-12">
-		<table class="table" style="margin-top:30px; margin-bottom:20px;">
+	<div class="col-xs-6">
+		<table class="table">
 			<tr>
 				<td>
 				</td>
@@ -84,10 +72,10 @@
         ]);
 
         var options = {
-          width: 500, height: 190,
-          redFrom: 0, redTo: 95,
-          yellowFrom:95, yellowTo: 99,
-          greenFrom:99, greenTo: 100,
+          width: 400, height: 120,
+          redFrom: 0, redTo: 90,
+          yellowFrom:90, yellowTo: 95,
+          greenFrom:95, greenTo: 100,
           minorTicks: 5
         };
 
@@ -111,10 +99,10 @@
         ]);
 
         var options = {
-          width: 500, height: 190,
+          width: 400, height: 120,
           redFrom: 0, redTo: 50,
-          yellowFrom:50, yellowTo: 70,
-          greenFrom:70, greenTo: 100,
+          yellowFrom:50, yellowTo: 65,
+          greenFrom:65, greenTo: 100,
           minorTicks: 5
         };
 
@@ -137,10 +125,10 @@
         ]);
 
         var options = {
-          width: 500, height: 190,
-          redFrom: 0, redTo: 10,
-          yellowFrom:10, yellowTo: 35,
-          greenFrom:35, greenTo: 100,
+          width: 400, height: 120,
+          redFrom: 0, redTo: 30,
+          yellowFrom:30, yellowTo: 40,
+          greenFrom:40, greenTo: 100,
           minorTicks: 5
         };
 

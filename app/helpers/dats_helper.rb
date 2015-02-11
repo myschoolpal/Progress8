@@ -9,7 +9,20 @@ module DatsHelper
     	return @ks2_number[ks2.upcase]
     				
 	end
-
+	
+	# Chooses between maths,english and Average depending on subject
+	def choose_ks2_measure(s,eng,ma,avg)
+		if check_subject(s) == 'maths'
+			ks2 = ma
+		elsif ['english','english_lit'].include? check_subject(s)
+			ks2 = eng
+		else
+			ks2 = avg
+		end
+		
+		return convert_ks2_to_a_score(ks2)
+		
+	end
 	#Checks to see if pupil is in a group then returns a circle with a tick
 	def check_group(g)
 		if g == 'Y'
@@ -158,11 +171,13 @@ module DatsHelper
 		va_full_array=[]
 		for h in title.reverse
 		va_total = calc_avg_school(arr,'Value Added',h)
-		ci = 1.96 * 1.14/ Math.sqrt(calc_number_pupils_school(@students,h))
-		up_va_total = (va_total + ci).round(2)
-		lo_va_total = (va_total - ci).round(2)
-		va_hash = {:title => h == 'na' ? 'Whole School' : h ,:va => va_total,:up_va => up_va_total, :lo_va => lo_va_total}
-		va_full_array.push(va_hash)
+		if va_total
+			ci = 1.96 * 1.14/ Math.sqrt(calc_number_pupils_school(@students,h))
+			up_va_total = (va_total + ci).round(2)
+			lo_va_total = (va_total - ci).round(2)
+			va_hash = {:title => h == 'na' ? 'Whole School' : h ,:va => va_total,:up_va => up_va_total, :lo_va => lo_va_total}
+			va_full_array.push(va_hash)
+		end
 		end
 			
 		return va_full_array
@@ -173,20 +188,33 @@ module DatsHelper
 	# Calculates average for group e.g. pp or sen for any column title
 	def calc_avg_school(arr,title,group)
 		if group == 'na'
-		(arr.map{|x| x[title].to_f}.reduce(:+)/arr.count).round(2)
+			if arr.count > 0
+				(arr.map{|x| x[title].to_f}.reduce(:+)/arr.count).round(2)
+			end
 		else
 			pupils = arr.select {|arr| arr[group].upcase == 'Y'}
-			(pupils.map{|x| x[title].to_f}.reduce(:+)/pupils.count).round(2)
+			if pupils.count > 0
+				(pupils.map{|x| x[title].to_f}.reduce(:+)/pupils.count).round(2)
+			end
 		end
 	end
 	
 	#Calculate number of pupils in group
 	def calc_number_pupils_school(arr,group) 
 		if group == 'na'
-			arr.count
+			if arr.count > 0 
+				return arr.count
+			else
+				return 0
+			end
 		else
 			pupils = arr.select {|arr| arr[group].upcase == 'Y'}
-			pupils.count
+			if pupils.count > 0 
+				return pupils.count
+			else
+				return 0
+			end
+			
 		end
 	end
 	
@@ -195,7 +223,7 @@ module DatsHelper
 		h = ['Measure','All Pupils','PP','SEN','EAL']
 		m = ['all','PP','SEN','EAL']
 		n = {'Levels of Progress' => 'lp', 'Points Score' => 'ps' , 'Value Added' => 'va'}
-		content_tag(:table, class: 'table') do
+		content_tag(:table, class: 'table table-bordered') do
 			concat( content_tag(:tr) do
 			 h.each { |h| concat content_tag(:th, h)}
 			 end)
@@ -262,31 +290,25 @@ module DatsHelper
 					color = 'below_color'
 				elsif avg<99
 					color = 'one_below_color'
-				elsif avg<100
+				elsif avg>=99
 					color = 'on_track_color'
-				elsif avg == 100
-					color = 'above_color'
 				end
 			elsif symbol == 'a_c'
 				if avg<50
 					color = 'below_color'
-				elsif avg<65
+				elsif avg<70
 					color = 'one_below_color'
-				elsif avg<75
+				elsif avg>=70
 					color = 'on_track_color'
-				elsif avg >= 75
-					color = 'above_color'
 				end
 			
 			elsif symbol == 'a_a'
 				if avg<10
 					color = 'below_color'
-				elsif avg<30
+				elsif avg<35
 					color = 'one_below_color'
-				elsif avg<40
+				elsif avg>35
 					color = 'on_track_color'
-				elsif avg >= 40
-					color = 'above_color'
 				end
 			
 			elsif symbol == 'ks2'

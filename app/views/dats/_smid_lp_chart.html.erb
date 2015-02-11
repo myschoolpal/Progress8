@@ -1,0 +1,66 @@
+
+
+<%lp_array = []%>
+<%lp_count = []%>
+<%axis_x = []%>
+<%lp_a = []%>
+<%if d%>
+	<%for i in 0..d.length-1%>
+		<%if d[i]['lp']%>
+			<%lp_array << d[i]['lp'].to_i%>
+			<%lp_a << d[i]['lp']%>
+		<%end%>
+	<%end%>
+<%end%>
+<%for i in -5..9%>
+	<%axis_x<<i.to_s+'LP'%>
+	<%lp_count << lp_array.count(i)%>
+<%end%>
+
+<div class="row">
+	<div class="col-xs-12">  
+		<h4>SMID Levels of Progress Chart</h4>  
+      	<div id="scatter_chart_div<%=n%>" style="width: 820px; height: 350px;"></div>
+	</div>
+</div>
+
+
+
+
+     <script type="text/javascript">
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Age', 'Weight'],
+          [-5, 0],
+          <%(0..12).step(3) do |i|%>
+          	
+			[<%=i-2%>, <%=lp_count[i,i+2].sma%>],
+		<%end%>
+        ]);
+
+        var options = {
+          title: 'SMD - Levels of Progress Moving Average',
+         chartArea: {width:'90%', left:60, top:10, height:'80%'},
+          hAxis: {title: 'Levels of Progress', minValue: -5, maxValue: 9, viewWindow: {
+                    min: -5
+                }},
+          vAxis: {title: 'SMID Weighting'},
+          legend: 'none',
+          trendlines: {
+      0: {
+        type: 'polynomial',
+        degree: 4,
+        visibleInLegend: true,
+        showR2: true,
+      }
+    }
+        };
+
+        var chart = new google.visualization.ScatterChart(document.getElementById('scatter_chart_div<%=n%>'));
+
+        chart.draw(data, options);
+      }
+    </script>
+    
+    

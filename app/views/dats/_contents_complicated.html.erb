@@ -1,0 +1,80 @@
+<style>
+.contents_table {
+width:80%;
+margin-right:auto;
+margin-left:auto;
+}
+.subject_title {
+font-weight:bold;
+margin-top:20px; 
+margin-bottom:0px;
+
+}
+</style>
+<div class="page">
+	<p class="qual_title">Contents</p>
+	<%pg = 1%>
+	<table class="contents_table">
+		<%@subject_titles.each do |s|%>
+			 <tr>
+				<td><p class="subject_title"><%=s.gsub(/-/, ' ')%></p></td>
+				<td></td>
+			 </tr>
+		
+				<%@students.map { |x| x[s+'_Class'].upcase }.uniq.reject(&:empty?).sort.each do |c|%>
+				<tr>
+					<td><%=c%></td> 
+					<td><%=pg%></td>
+					<%pg+=4%>
+				</tr>
+				<%end%>
+		
+				<tr>
+				<td>Subject Summary</td><td><%=pg%></td>
+				</tr>
+				<%lp_count = @students.map { |x| x[s+' Levels of Progress'] }.reject(&:blank?).select { |v| v < 3}.count/31%>
+				<%va_count = @students.map { |x| x[s+' Value Added'] }.reject(&:blank?).select { |v| v < 0}.count/31%>
+				<%pg+=3 + lp_count + va_count%>
+		<%end%>
+		
+		 <tr>
+			<td>Subject Overview</td>
+		 </tr>
+			<tr>
+				<td>Average Point Score, Levels of Progress and Value Added per Subject</td>
+				<td><%=pg%> </td>
+				<%pg+=1%>
+			</tr>
+			<tr>
+				<td> Value Added with Significance</td>
+				<td><%=pg%></td>
+				<%pg+=3%>
+			</tr>
+			<tr>
+				<td>A*-G, A*-C, A*-A per subject</td>
+				<td><%=pg%></td>
+				<%pg+=1%>
+			</tr>
+	
+		<tr>
+			<td>Whole School Overview</td>
+		</tr>
+		<tr>
+			<td>All Students - Progress 8 Ranking</td>
+			<td><%=pg%></td>
+			<%count_students = @students.count/34%>
+			<%pg+=1+count_students%>
+		</tr>
+		
+		<tr>
+			<td>English Literature Predictions</td>
+			<td><%=pg%></td>
+			<%no_e_lit_arr = @students.select {|arr| arr['English_Literature_Points_Score'].blank?}%>
+			<%count_eng_lit_pages = no_e_lit_arr.count/34%>
+			<%pg+=1 + count_eng_lit_pages%>
+		</tr>
+		<tr>
+			<td>School Summary Page</td><td><%=pg%></td>
+		</tr>
+	</table>
+</div>

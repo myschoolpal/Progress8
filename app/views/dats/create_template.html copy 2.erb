@@ -72,16 +72,14 @@ margin-bottom:20px;
 margin-top:20px;
 }
 </style>
-
 <div class="row top_bar">
-	<div class="col-xs-1 col-xs-offset-1" id="show_maths"><div class="top_bar_subject text-center core_subject">Maths Qualifications</div></div>
+	<div class="col-xs-1 col-xs-offset-2" id="show_maths"><div class="top_bar_subject text-center core_subject">Maths Qualifications</div></div>
 	<div class="col-xs-1" id="show_eng"><div class="top_bar_subject text-center core_subject">English Qualifications</div></div>
 	<div class="col-xs-1" id="show_eng_lit"><div class="top_bar_subject text-center core_subject">Eng-Lit Qualifications</div></div>
 	<div class="col-xs-1" id="show_science"><div class="top_bar_subject text-center ebacc_subject">Science Qualifications</div></div>
 	<div class="col-xs-1" id="show_humanities"><div class="top_bar_subject text-center ebacc_subject">Humanities Qualifications</div></div>
 	<div class="col-xs-1" id="show_lang"><div class="top_bar_subject text-center ebacc_subject">Language Qualifications</div></div>
 	<div class="col-xs-1" id="show_other"><div class="top_bar_subject text-center other_subject"> Other <br />Subjects</div></div>
-	<div class="col-xs-1" id="show_other_voc"><div class="top_bar_subject text-center other_subject"> Other Vocational<br />Subjects</div></div>
 </div>
 
 <div id="title" class="text-center"></div>
@@ -92,126 +90,41 @@ margin-top:20px;
 		<div id="maths_subjects" class="subjects">
 	
 			<div id="maths_subject_selection">
-				<%@data.select {|h| h["p8_section"] == "MATHS" }.each do |d| %>
-					<div class="subject_selector">
-						<div class="col-xs-2">
-							<div id="<%=d["title"].parameterize%>" class="selection subject_selector text-center">
-								<%=d["title"]%>
-								<hr>
-								<%=d["QAN"]%>
-							</div>
-						</div>
-					</div>
-				<%end%>
+		
 			</div>
 		</div>
 		<div id="eng_subjects" class="subjects">
 	
 			<div id="eng_subject_selection">
-				<%@data.select {|h| h["p8_section"] == "ENGLISH_LANG" }.each do |d| %>
-					<div class="subject_selector">
-						<div class="col-xs-2">
-							<div id="<%=d["title"].parameterize%>" class="selection subject_selector text-center">
-								<%=d["title"]%>
-								<hr>
-								<%=d["QAN"]%>
-							</div>
-						</div>
-					</div>
-				<%end%>
+		
 			</div>
 		</div>
 		<div id="eng_lit_subjects" class="subjects">
 	
 			<div id="eng_lit_subject_selection">
-				<%@data.select {|h| h["p8_section"] == "ENGLISH_LIT" }.each do |d| %>
-					<div class="subject_selector">
-						<div class="col-xs-2">
-							<div id="<%=d["title"].parameterize%>" class="selection subject_selector text-center">
-								<%=d["title"]%>
-								<hr>
-								<%=d["QAN"]%>
-							</div>
-						</div>
-					</div>
-				<%end%>
+		
 			</div>
 		</div>
 		<div id="science_subjects" class="subjects">
 	
 			<div id="science_subject_selection">
-				<%@data.select {|h| h["p8_section"] == "SCIENCE" }.each do |d| %>
-					<div class="subject_selector">
-						<div class="col-xs-2">
-							<div id="<%=d["title"].parameterize%>" class="selection subject_selector text-center">
-								<%=d["title"]%>
-								<hr>
-								<%=d["QAN"]%>
-							</div>
-						</div>
-					</div>
-				<%end%>
+		
 			</div>
 		</div>
 		<div id="humanities_subjects" class="subjects">
 	
 			<div id="humanities_subject_selection">
-				<%@data.select {|h| h["p8_section"] == "HUMANITIES" }.each do |d| %>
-					<div class="subject_selector">
-						<div class="col-xs-2">
-							<div id="<%=d["title"].parameterize%>" class="selection subject_selector text-center">
-								<%=d["title"]%>
-								<hr>
-								<%=d["QAN"]%>
-							</div>
-						</div>
-					</div>
-				<%end%>
+		
 			</div>
 		</div>
 		<div id="lang_subjects" class="subjects">
 			<div id="lang_subject_selection" class="container">
-					<%@data.select {|h| h["p8_section"] == "LANGUAGES" }.each do |d| %>
-					<div class="subject_selector">
-						<div class="col-xs-2">
-							<div id="<%=d["title"].parameterize%>" class="selection subject_selector text-center">
-								<%=d["title"]%>
-								<hr>
-								<%=d["QAN"]%>
-							</div>
-						</div>
-					</div>
-				<%end%>
+		
 			</div>
 		</div>
 		<div id="other_subjects" class="subjects">
 			<div id="other_subject_selection" class="container">
-				<%@data.select {|h| h["p8_section"] == "OTHER" }.each do |d| %>
-					<div class="subject_selector">
-						<div class="col-xs-2">
-							<div id="<%=d["title"].parameterize%>" class="selection subject_selector text-center">
-								<%=d["title"]%>
-								<hr>
-								<%=d["QAN"]%>
-							</div>
-						</div>
-					</div>
-				<%end%>
-			</div>
-		</div>
-		<div id="other_voc_subjects" class="subjects">
-			<div id="other_voc_subject_selection" class="container">
-				<%@data.select {|h| h["p8_section"] == "OTHER_VOC" }.each do |d| %>
-					<div class="subject_selector">
-						<div class="col-xs-2">
-							<div id="<%=d["title"].parameterize%>" class="selection subject_selector text-center">
-								<%=d["title"]%>
-								<hr>
-								<%=d["QAN"]%>
-							</div>
-						</div>
-					</div>
-				<%end%>
+		
 			</div>
 		</div>
 	</div>
@@ -230,6 +143,30 @@ margin-top:20px;
 
 
 <script>
+for (var i = 0; i < maths_subject.length; i++) {
+ $('#maths_subject_selection').append('<div class="col-xs-2"><div id='+maths_subject[i].replace(/\s+/g, '-')+' class="selection subject_selector text-center">'+maths_subject[i]+'</div></div>');
+}
+for (var i = 0; i < eng.length; i++) {
+ $('#eng_subject_selection').append('<div class="col-xs-2"><div id='+eng[i].replace(/\s+/g, '-')+' class="selection subject_selector text-center">'+eng[i]+'</div></div>');
+}
+
+for (var i = 0; i < eng_lit.length; i++) {
+ $('#eng_lit_subject_selection').append('<div class="col-xs-2"><div id='+eng_lit[i].replace(/\s+/g, '-')+' class="selection subject_selector text-center">'+eng_lit[i]+'</div></div>');
+}
+for (var i = 0; i < science.length; i++) {
+ $('#science_subject_selection').append('<div class="col-xs-2"><div id='+science[i].replace(/\s+/g, '-')+' class="selection subject_selector text-center">'+science[i]+'</div></div>');
+}
+for (var i = 0; i < humanities.length; i++) {
+ $('#humanities_subject_selection').append('<div class="col-xs-2"><div id='+humanities[i].replace(/\s+/g, '-')+' class="selection subject_selector text-center">'+humanities[i]+'</div></div>');
+}
+for (var i = 0; i < lang.length; i++) {
+ $('#lang_subject_selection').append('<div class="col-xs-2"><div id='+lang[i].replace(/\s+/g, '-')+' class="selection subject_selector text-center">'+lang[i]+'</div></div>');
+}
+
+for (var i = 0; i < other_subject.length; i++) {
+ $('#other_subject_selection').append('<div class="col-xs-2"><div id='+other_subject[i].replace(/\s+/g, '-')+' class="selection subject_selector text-center">'+other_subject[i]+'</div>');
+}
+
 $('.subjects').hide();
 ruby_list=['Surname','Forename','PP','SEN','EAL','English_KS2_fine', 'Maths_KS2_fine', 'English_KS2_grade', 'Maths_KS2_grade'];
 $('#show_maths').click(function(){
@@ -273,13 +210,6 @@ $('#show_other').click(function(){
 	$('#title').text('Other Qualifications');
 	$('#other_subjects').show();
 });
-$('#show_other_voc').click(function(){
-	$('.subjects').hide();
-	$('#title').text('Other Vocational Qualifications');
-	$('#other_voc_subjects').show();
-});
-
-
 
 $('.selection').click(function() {
    
@@ -300,7 +230,6 @@ $('.selection').click(function() {
 	});
 	
 });
-
 $('#submit').click(function(){
 var data = ruby_list;
 var csvContent = "data:text/csv;charset=utf-8,";

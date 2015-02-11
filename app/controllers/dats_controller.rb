@@ -7,7 +7,9 @@ class DatsController < ApplicationController
   # GET /dats.json
   
   def create_template
-  
+  	json = File.read('public/2016_qualification.json')
+	@data = JSON.parse(json)
+	
   end
   
   
@@ -39,8 +41,8 @@ class DatsController < ApplicationController
     # Basic details on each of the pupils
     
 	details = ['Surname', 'Forename','PP' , 'SEN', 'EAL', 'English_KS2_fine', 'Maths_KS2_fine', 'English_KS2_grade', 'Maths_KS2_grade']
-	@display_details = ['Surname', 'Forename','PP' , 'SEN', 'EAL', 'Exp A8', 'Eng KS2', 'Ma KS2','Avg KS2']
-	json = File.read('public/data.json')
+	@display_details = ['Surname', 'Forename','PP' , 'SEN', 'EAL', 'Exp A8', 'Eng KS2', 'Ma KS2','Avg KS2','Result','PS','LP','P8']
+	json = File.read('public/dataTiny.json')
 	data = JSON.parse(json)
 
 		@students =[]
@@ -109,9 +111,18 @@ class DatsController < ApplicationController
 			@student_data['Maths_Points_Score'] = maths.max
 			@student_data['English_Points_Score'] = english_score
 			@student_data['English_Literature_Points_Score'] = english_lit.max
-			@student_data['Other Ebacc Subjects'] = ebacc_score = ebacc.sort.last(3).inject{|sum,x| sum + x }
+			if ebacc.any?
+				@student_data['Other Ebacc Subjects'] = ebacc_score = ebacc.sort.last(3).inject{|sum,x| sum + x }
+			else
+				@student_data['Other Ebacc Subjects'] = ebacc_score = 0
+			end
+			
 			other = other + ebacc.sort[0..-4]
-			@student_data['Other Subjects'] =other_score = other.sort.last(3).inject{|sum,x| sum + x }
+			if other.any?
+				@student_data['Other Subjects'] =other_score = other.sort.last(3).inject{|sum,x| sum + x }
+			else
+				@student_data['Other Subjects'] =other_score = 0
+			end
 			#Calculate Attainment 8
 			@student_data['Attainment 8'] = a8 =  (maths.max * 2) + eng_score + ebacc_score + other_score
 			if !ks2_average.blank?
@@ -126,7 +137,12 @@ class DatsController < ApplicationController
 			@students << @student_data
 		end
 	
-	
+		@subject_titles = []
+		@students[0].keys.each do |k|
+		if k.include? '_Class'
+			@subject_titles.push(k[0..-7])
+		end
+		end
 
 	
 	

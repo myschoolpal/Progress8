@@ -19,4 +19,16 @@
 <%end%>
 <%if params[:id] == 'front'%>
 	<%=render 'front_page'%>
+	<%=render 'content_description'%>
+<%end%>
+<%if params[:id] == 'contents'%>
+	<div class="cont">
+		<%=render 'contents'%>
+	</div>
+<%end%>
+
+<%if params[:id] == 'subject_page'%>
+	<div class="cont">
+		<%=render 'subject_page', {:subject => "AQA Maths"}%>
+	</div>
 <%end%>

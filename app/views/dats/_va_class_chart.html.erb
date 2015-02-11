@@ -3,8 +3,8 @@
 	<%va_array << {:name => d[i]['surname']+' '+d[i]['forename'], :va => d[i]['va']}%>
 <%end%>
 
-<div class="row" style="padding-top:100px;">
-	<div id="value_added_chart<%=n%>" class="rotate_90"></div>
+<div class="row" >
+	<div id="value_added_chart<%=n%>"></div>
 </div>
 		
 	<script type="text/javascript">
@@ -20,13 +20,13 @@
 		  ]);
 
 		  var options = {
-			title: 'Value Added per Pupil',
+			title: '',
 			legend:  'none',
-			height:800,
-			width:1150,
+			height:550,
+			width:820,
 			chartArea: {height:"50%", width: "90%", left:80, top:50},
 			hAxis: {title: 'Pupils', titleTextStyle: {color: 'black'}, direction:-1, slantedText:true, slantedTextAngle:90 },
-			vAxis: {title: 'Value Added' }
+			vAxis: {title: 'Progress 8 Score' }
 		  };
 
 		  var chart = new google.visualization.ColumnChart(document.getElementById('value_added_chart<%=n%>'));

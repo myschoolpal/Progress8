@@ -21,21 +21,23 @@
 
 
 <div class="row">
-	<div class="col-xs-6">            
-        <div id="chart_div<%=n%>" style="width: 460px; height: 250px;"></div>
+	<div class="col-xs-6">  
+		<h4>Levels of Progress - Bar Chart</h4>            
+        <div id="chart_div<%=n%>" style="width: 410px; height: 400px;"></div>
     </div>
-    <div class="col-xs-6">   
-      <div id="donutchart<%=n%>" style="width: 460px; height: 250px;"></div>
+    <div class="col-xs-6">
+    	<h4>SMID Levels of Progress - Pie Chart</h4>     
+      <div id="donutchart<%=n%>" style="width: 410px; height: 400px;"></div>
 	</div>
 </div>
+<hr>
 <div class="row">
-	<div class="col-xs-6">            
-        <div id="curve_chart_div<%=n%>" style="width: 460px; height: 250px;"></div>
+	<div class="col-xs-12">
+		<h4>Levels of Progres - Overview</h4>              
+        <div id="curve_chart_div<%=n%>" style="width: 820px; height: 350px;"></div>
     </div>
-    <div class="col-xs-6">   
-      	<div id="scatter_chart_div<%=n%>" style="width: 460px; height: 250px;"></div>
-	</div>
 </div>
+
 
 
 
@@ -62,9 +64,9 @@ function drawChart() {
   ]);
 
   var options = {
-    title: 'Levels of Progress',
+    title: '',
     legend:  'none',
-    chartArea: {width:'90%'},
+    chartArea: {width:'90%', height:'80%'},
     hAxis: {title: 'Levels of Progress', titleTextStyle: {color: 'black'}, ticks: [-5,-4,-3,-2,-1,0,1,2,3,4,5,6,7,8,9]},
     vAxis: {title: 'Number of Pupils', maxValue: <%=lp_count.max+1%>}
   };
@@ -98,7 +100,8 @@ function drawChart() {
         ]);
 
         var options = {
-          title: 'Levels of Progress',
+          title: '',
+          chartArea: {width: '100%', height:'80%'},
           pieHole: 0.4,
           pieSliceText: 'label',
           legend: {
@@ -148,9 +151,11 @@ function drawChart() {
         ]);
 
         var options = {
-          title: 'Levels of Progress Curve',
+          title: '',
+           chartArea: {width:'90%', top:10, left:40, height:'80%'},
+            legend: 'none',
           hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
-          chartArea: {width:'90%'},
+
           vAxis: {minValue: 0},
         };
 
@@ -158,41 +163,4 @@ function drawChart() {
         chart.draw(data, options);
       }
     </script>
-    
-     <script type="text/javascript">
-      google.setOnLoadCallback(drawChart);
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Age', 'Weight'],
-          [-5, 0],
-          <%(0..12).step(3) do |i|%>
-          	
-			[<%=i-2%>, <%=lp_count[i,i+2].sma%>],
-		<%end%>
-        ]);
-
-        var options = {
-          title: 'SMD - Levels of Progress Moving Average',
-          chartArea: {width:'90%'},
-          hAxis: {title: 'Levels of Progress', minValue: -5, maxValue: 9, viewWindow: {
-                    min: -5
-                }},
-          vAxis: {title: 'Weight'},
-          legend: 'none',
-          trendlines: {
-      0: {
-        type: 'polynomial',
-        degree: 4,
-        visibleInLegend: true,
-        showR2: true,
-      }
-    }
-        };
-
-        var chart = new google.visualization.ScatterChart(document.getElementById('scatter_chart_div<%=n%>'));
-
-        chart.draw(data, options);
-      }
-    </script>
-    
     

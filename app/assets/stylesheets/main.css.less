@@ -9,16 +9,18 @@ body {
 }
 
 .tm_matrix {
-max-height:1250px;
-width:900px;
+height:820px;
+width:1200px;
 overflow:hidden;
-font-size:9px;
+
 border: 2px solid @gray;
 }
 
 .tm_matrix td {
-height:30px;
 border: 1px solid @gray;
+padding:2px;
+width:120px;
+height:41px;
 }
 
 .cont {
@@ -29,8 +31,8 @@ margin-right:auto;
 }
 
 .front_page {
-width:940px;
-height:1310px;
+width:958px;
+height:1350px;
 background-color:#fff;
 overflow:hidden;
 margin-top:10px;
@@ -45,20 +47,22 @@ border:1px solid @gray;
 .page {
 width:958x;
 max-width:958x;
-height:1330px;
+height:1350px;
 margin-left:auto;
 margin-right:auto;
 margin-top:20px;
 border:1px solid @gray;
-padding:20px;
+padding-top:20px;
+padding-left:60px;
+padding-right:60px;
 position:relative;
 }
 
 .footer {
 position: absolute; 
-bottom: 0; 
+top: 1320px; 
 width: 918px; 
-height: 30px;
+height: 12px;
 
 }
 
@@ -84,18 +88,22 @@ border:0px solid @gray;
 .below_color 
 {
 background-color:@brand-danger;
+color: #fff;
 }
 .three_levels_color 
 {
 background-color:@brand-warning;
+color: #fff;
 }
 .four_levels_color 
 {
 background-color:@brand-success;
+color: #fff;
 }
 .above_color 
 {
 background-color:@brand-primary;
+color: #fff;
 }
 
 .main_table {
@@ -116,54 +124,65 @@ overflow: hidden;
 .title_td {
 border: 1px solid @tm_border;
 text-align:center;
-font-size:10px;
+font-size:15px;
+
 }
 
 .below {
 background-color: @brand-danger;
 border: 1px solid @tm_border;
+color: #fff;
 }
 
 .one_below {
 background-color: @brand-warning;
 border: 1px solid @tm_border;
+color: #fff;
 }
 
 .on_target {
 background-color: @brand-success;
 border: 1px solid @tm_border;
+color: #fff;
 }
+
 
 .above {
 background-color: @brand-primary !important;
 border: 1px solid @tm_border;
+color: #fff;
 }
 
 .mini_table {
 padding:0px;
 width:100%;
+height:600px;
 }
 
 .mini-table tr {
-line-height:12px;
+line-height:15px;
 padding:0px;
 }
 
 .mini-table th {
-font-size:10px;
+font-size:15px;
 padding:0px;
 text-align:center;
+width:92px;
 }
 .mini_table td {
-max-height:10px;
+max-height:25px;
+width:92px;
 margin:0px;
-font-size:10px;
+font-size:15px;
 padding:0px;
 text-align:center;
 }
 
 
-
+.fa {
+font-size:22px;
+}
 
 .fa-check-circle {
 	font-size:22px;
@@ -171,16 +190,16 @@ text-align:center;
 }
 
 .qual_title {
-	font-size:15px;
+	font-size:18px;
 	font-weight:bold;
 }
 
 .class_title {
-	font-size:13px;
+	font-size:16px;
 	font-weight: bold;
 }
 .text {
-font-size:12px;
+font-size:14px;
 
 }
 
@@ -220,13 +239,12 @@ font-size:12px;
 	margin-left:auto;
 	margin-right:auto;
     border-radius: 50%;
-    width: 24px;
-    height: 24px;
+    width: 32px;
+    height: 32px;
     padding-top: 5px;
-    padding-left:1px;
     background: #fff;
     text-align: center;
-    font: 11px Arial, sans-serif;
+    font-size: 15px;
     
 }
 
@@ -292,23 +310,7 @@ font-size:25px;
 
 }
 
-.student_list_table {
-width:100%;
-text-align: center;
-}
 
-.student_list_table th{
-padding-bottom:4px;
-border:1px solid #eee;
-text-align: center;
-
-}
-
-.student_list_table td {
-padding-top:4px;
-padding-bottom:4px;
-border:1px solid #eee;
-}
 
 .rotate_90 {
     -webkit-transform: rotate(90deg);
@@ -318,3 +320,13 @@ border:1px solid #eee;
     transform: rotate(90deg);
 }
 
+.contents_table {
+width:80%;
+margin-right:auto;
+margin-left:auto;
+}
+
+.contents_table td {
+font-weight:bold;
+height:30px;
+}

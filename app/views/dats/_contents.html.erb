@@ -1,0 +1,61 @@
+<div class="page">
+	<p class="qual_title">Contents</p>
+	<hr>
+	<%pg = 8%>
+	<table class="contents_table">
+		<tr>
+			<td>Key Information</td>
+			<td>1</td>
+		</tr>
+		<%@subject_titles.each do |s|%>
+			 <tr>
+				<td><%=s.gsub(/-/, ' ')%></td>
+				<td><%=pg%></td>
+			 </tr>
+		
+				<%@students.map { |x| x[s+'_Class'].upcase }.uniq.reject(&:empty?).sort.each do |c|%>
+					<%pg+=5%>
+				<%end%>
+				<%lp_count = @students.map { |x| x[s+' Levels of Progress'] }.reject(&:blank?).select { |v| v < 3}.count/31%>
+				<%va_count = @students.map { |x| x[s+' Value Added'] }.reject(&:blank?).select { |v| v < 0}.count/31%>
+				<%pg+=6 + lp_count + va_count%>
+		<%end%>
+		
+
+			<tr>
+				<td>Average Point Score, Levels of Progress and Progress 8 per Subject</td>
+				<td><%=pg%> </td>
+				<%pg+=1%>
+			</tr>
+			<tr>
+				<td> Progress 8 Score with Significance</td>
+				<td><%=pg%></td>
+				<%pg+=3%>
+			</tr>
+			<tr>
+				<td>A*-G, A*-C, A*-A per subject</td>
+				<td><%=pg%></td>
+				<%pg+=1%>
+			</tr>
+	
+
+		<tr>
+			<td>All Students - Progress 8 Ranking</td>
+			<td><%=pg%></td>
+			<%count_students = @students.count/34%>
+			<%pg+=1+count_students%>
+		</tr>
+		
+		<tr>
+			<td>English Literature Predictions</td>
+			<td><%=pg%></td>
+			<%no_e_lit_arr = @students.select {|arr| arr['English_Literature_Points_Score'].blank?}%>
+			<%count_eng_lit_pages = no_e_lit_arr.count/34%>
+			<%pg+=1 + count_eng_lit_pages%>
+		</tr>
+		<tr>
+			<td>School Summary Page</td><td><%=pg%></td>
+		</tr>
+	</table>
+
+</div>
