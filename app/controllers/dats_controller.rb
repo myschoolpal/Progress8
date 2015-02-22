@@ -35,16 +35,21 @@ class DatsController < ApplicationController
     l2n_2_score ={"PASS" => 5, "MERIT" => 6, "DISTINCTION" => 7, "DISTINCTION*" =>8}
     @grade_score = {"U" => 0, "G"=>1, "F"=>2, "E"=>3, "D"=>4, "C" => 5, "B" => 6, "A" => 7, "A*"=>8}
     
-    @ks2_number = {"W"=> 0, "1C" => 1, "1B" => 2, "1A" => 3, "2C" => 4, "2B" => 5, "2A" => 6, "3C" => 7, "3B" => 8, "3A" => 9, "4C" => 10, "4B" => 11, "4A" => 12,  "5C" => 13, "5B" => 14,
+    @ks2_number = {"N" => 0, "B" => 0, "W"=> 0, "1" => 2, "1C" => 1, "1B" => 2, "1A" => 3, "2" => 5, "2C" => 4, "2B" => 5, "2A" => 6, "3" => 8, "3C" => 7, "3B" => 8, "3A" => 9, "4" => 11, "4C" => 10, "4B" => 11, "4A" => 12, "5" => 14,  "5C" => 13, "5B" => 14,
+    				"5A" => 15, "6" => 17, "6C" => 16, "6B" => 17, "6A" => 18}
+	
+	 @ks2_score_tm = {"W"=> 0, "1C" => 1, "1B" => 2, "1A" => 3, "2C" => 4, "2B" => 5, "2A" => 6, "3C" => 7, "3B" => 8, "3A" => 9, "4C" => 10, "4B" => 11, "4A" => 12,  "5C" => 13, "5B" => 14,
     				"5A" => 15, "6C" => 16, "6B" => 17, "6A" => 18}
+	
 	
     # Basic details on each of the pupils
     
 	details = ['Surname', 'Forename','PP' , 'SEN', 'EAL', 'English_KS2_fine', 'Maths_KS2_fine', 'English_KS2_grade', 'Maths_KS2_grade']
 	@display_details = ['Surname', 'Forename','PP' , 'SEN', 'EAL', 'Exp A8', 'Eng KS2', 'Ma KS2','Avg KS2','Result','PS','LP','P8']
-	json = File.read('public/dataTiny.json')
+	json = File.read('public/dataDronfield.json')
 	data = JSON.parse(json)
-
+	qualification_data = File.read('public/quals.json')
+		@qualifications = JSON.parse(qualification_data)
 		@students =[]
 		data.each do |s|
 			@student_data={}
@@ -61,36 +66,43 @@ class DatsController < ApplicationController
 			end
 			
 			if !s['Maths_KS2_grade'].blank? && !s['English_KS2_grade'].blank?
-			ks2_grade_average = (@ks2_number[s['Maths_KS2_grade'].upcase] +  @ks2_number[s['English_KS2_grade'].upcase])/2
+				if @ks2_number[s['Maths_KS2_grade'].upcase] && @ks2_number[s['Maths_KS2_grade'].upcase]
+					ks2_grade_average = (@ks2_number[s['Maths_KS2_grade'].upcase] +  @ks2_number[s['Maths_KS2_grade'].upcase])/2
+				end
 			else 
 			ks2_grade_average = ''
 			end
 			s.each do |d|
-				@student_data[d[0]]=d[1]
+				@student_data[d[0]]=d[1].to_s.gsub(/ /, '')
 				if d[0] == 'Maths_KS2_fine'
 					@student_data['Average KS2 Fine']=ks2_average
 					@student_data['Expected Attainment 8']=  ks2_e_a8[ks2_average]
 				end
 				if d[0] == 'Maths_KS2_grade'
-					@student_data['Average KS2']= @ks2_number.key(ks2_grade_average)
+					if !ks2_grade_average.blank?
+						@student_data['Average KS2']= @ks2_number.key(ks2_grade_average)
+					else
+						@student_data['Average KS2']= ''
+					end
 				end
-				qual = check_subject(d[0].gsub(/-/, ' '))
+				qual = check_subject(d[0].gsub(/-/,' '))
 				if qual !=false
-					point_score = convert_grade_to_number(d[0].gsub(/-/, ' '),d[1])
+					
+					point_score = convert_grade_to_number(d[0].gsub(/-/, ' '),d[1].to_s.gsub(/ /, ''))
 					@student_data[d[0]+' Points Score'] = point_score
 					@student_data[d[0]+' Levels of Progress'] = calculate_levels_of_progess(s['English_KS2_grade'], s['Maths_KS2_grade'], d[0], point_score)
 					@student_data[d[0]+' Value Added'] = calculate_va(@student_data['Expected Attainment 8'], point_score)
-					if qual == 'maths'
+					if qual == 'MATHS'
 						maths.push(point_score)
-					elsif qual == 'english'
+					elsif qual == 'ENGLISH_LANG'
 						english.push(point_score)
-					elsif qual == 'english_lit'
+					elsif qual == 'ENGLISH_LIT'
 						english_lit.push(point_score)
 						other.push(point_score.to_i)
-					elsif ['science','humanities','language'].include? qual
+					elsif ['SCIENCE','HUMANITIES','LANGUAGES'].include? qual
 						ebacc.push(point_score.to_i)
 					# The other lookup will need to be changed to level 1 and 2 etc
-					elsif ['other'].include? qual
+					elsif ['OTHER','OTHER_VOC'].include? qual
 						other.push(point_score.to_i)
 					end
 				end
@@ -108,13 +120,20 @@ class DatsController < ApplicationController
 			end
 			
 			#Add the points scores to the main Hashes
-			@student_data['Maths_Points_Score'] = maths.max
+			
 			@student_data['English_Points_Score'] = english_score
 			@student_data['English_Literature_Points_Score'] = english_lit.max
 			if ebacc.any?
 				@student_data['Other Ebacc Subjects'] = ebacc_score = ebacc.sort.last(3).inject{|sum,x| sum + x }
 			else
 				@student_data['Other Ebacc Subjects'] = ebacc_score = 0
+			end
+			if maths.any?
+				maths_max = maths.max
+				@student_data['Maths_Points_Score'] = maths.max
+			else
+				maths_max = 0
+				@student_data['Maths_Points_Score'] = 0
 			end
 			
 			other = other + ebacc.sort[0..-4]
@@ -124,9 +143,9 @@ class DatsController < ApplicationController
 				@student_data['Other Subjects'] =other_score = 0
 			end
 			#Calculate Attainment 8
-			@student_data['Attainment 8'] = a8 =  (maths.max * 2) + eng_score + ebacc_score + other_score
-			if !ks2_average.blank?
-			@student_data['Progress 8'] = p8 =a8 - ks2_e_a8[ks2_average]
+			@student_data['Attainment 8'] = a8 =  (maths_max * 2) + eng_score + ebacc_score + other_score
+			if !ks2_average.blank? && ks2_average >0
+			@student_data['Progress 8'] = p8 = a8 - ks2_e_a8[ks2_average]
 			@student_data['Value Added'] = (p8.to_f/10)
 			else
 			p8 = ''

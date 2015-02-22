@@ -33,7 +33,7 @@
 <hr>
 <div class="row">
 	<div class="col-xs-12">
-		<h4>Levels of Progres - Overview</h4>              
+		<h4>Levels of Progress - Overview</h4>              
         <div id="curve_chart_div<%=n%>" style="width: 820px; height: 350px;"></div>
     </div>
 </div>
@@ -48,16 +48,16 @@ function drawChart() {
 
   var data = google.visualization.arrayToDataTable([
     ['Levels of Progress', 'Number of Pupils',  { role: 'style' } ],
-    <%for i in 0..5%>
+    <%for i in 0..7%>
     [<%=i-5%>,  <%=lp_count[i]%>, '#d9534f'],
     <%end%>
-    <%for i in 6..7%>
+    <%for i in 8..8%>
     [<%=i-5%>,  <%=lp_count[i]%>, '#f0ad4e'],
     <%end%>
-        <%for i in 8..8%>
+        <%for i in 9..9%>
     [<%=i-5%>,  <%=lp_count[i]%>, '#5cb85c'],
     <%end%>
-        <%for i in 9..14%>
+        <%for i in 10..14%>
     [<%=i-5%>,  <%=lp_count[i]%>, '#428bca'],
     <%end%>
 
@@ -66,8 +66,8 @@ function drawChart() {
   var options = {
     title: '',
     legend:  'none',
-    chartArea: {width:'90%', height:'80%'},
-    hAxis: {title: 'Levels of Progress', titleTextStyle: {color: 'black'}, ticks: [-5,-4,-3,-2,-1,0,1,2,3,4,5,6,7,8,9]},
+    chartArea: {left:55, width:'80%', height:'80%'},
+    hAxis: {title: 'Levels of Progress', titleTextStyle: {color: 'black'}, ticks: [-5,-4,-3,-2,-1,0,1,2,3,4,5,6,7,8,9], slantedText:false},
     vAxis: {title: 'Number of Pupils', maxValue: <%=lp_count.max+1%>}
   };
 
@@ -85,23 +85,23 @@ function drawChart() {
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Levels of Progress', 'Number of Pupils',  { role: 'style' }],
-          <%for i in 0..5%>
+          <%for i in 0..7%>
 			['<%=i-5%>LP',  <%=lp_count[i]%>, '#d9534f'],
 		<%end%>
-		<%for i in 6..7%>
+		<%for i in 8..8%>
 			['<%=i-5%>LP',  <%=lp_count[i]%>, '#f0ad4e'],
 		<%end%>
-		<%for i in 8..8%>
+		<%for i in 9..9%>
 			['<%=i-5%>LP',  <%=lp_count[i]%>, '#5cb85c'],
 		<%end%>
-		<%for i in 9..14%>
+		<%for i in 10..14%>
 			['<%=i-5%>LP',  <%=lp_count[i]%>, '#428bca'],
 		<%end%>
         ]);
 
         var options = {
           title: '',
-          chartArea: {width: '100%', height:'80%'},
+          chartArea: {width: '100%', height:'70%'},
           pieHole: 0.4,
           pieSliceText: 'label',
           legend: {
@@ -114,10 +114,10 @@ function drawChart() {
             3: { color: '#d9534f' },
             4: { color: '#d9534f' },
             5: { color: '#d9534f' },
-            6: { color: '#f0ad4e' },
-            7: { color: '#f0ad4e' },
-            8: { color: '#5cb85c' },
-            9: { color: '#428bca' },
+            6: { color: '#d9534f' },
+            7: { color: '#d9534f' },
+            8: { color: '#f0ad4e' },
+            9: { color: '#5cb85c' },
             10: { color: '#428bca' },
             11: { color: '#428bca' },
             12: { color: '#428bca' },
@@ -136,16 +136,16 @@ function drawChart() {
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Levels of Progress', 'Number of Pupils',  { role: 'style' }],
-          <%for i in 0..5%>
+          <%for i in 0..8%>
 			['<%=i-5%>LP',  <%=lp_count[i]%>, '#d9534f'],
 		<%end%>
-          <%for i in 6..7%>
+          <%for i in 9..9%>
 			['<%=i-5%>LP',  <%=lp_count[i]%>, '#f0ad4e'],
 		<%end%>
-		<%for i in 8..8%>
+		<%for i in 10..10%>
 			['<%=i-5%>LP',  <%=lp_count[i]%>, '#5cb85c'],
 		<%end%>
-		<%for i in 9..14%>
+		<%for i in 11..14%>
 			['<%=i-5%>LP',  <%=lp_count[i]%>, '#428bca'],
 		<%end%>
         ]);
@@ -154,7 +154,7 @@ function drawChart() {
           title: '',
            chartArea: {width:'90%', top:10, left:40, height:'80%'},
             legend: 'none',
-          hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
+          hAxis: {title: 'Levels of Progress',  titleTextStyle: {color: '#333'}},
 
           vAxis: {minValue: 0},
         };

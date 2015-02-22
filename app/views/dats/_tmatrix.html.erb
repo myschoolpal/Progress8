@@ -2,8 +2,8 @@
 <%on_target = [2,12,21,30,40,49,58,68,77,86,96,105,114,124,133,142,152,161,170]%>
 <%above = [3,4,5,6,7,8,13,14,15,16,17,22,23,24,25,26,31,32,33,34,35,41,42,43,44,50,51,52,53,59,60,61,62,69,70,71,78,79,80,87,88,89,97,98,106,107,115,116,125,134,143]%>
 <%k=0%>
-<h3>Transition Matrix </h3>
-				<hr>
+
+
 <div class="rotate_90">
 
 <table class="tm_matrix" id="printTable" >
@@ -20,21 +20,19 @@
 				<th class="title_td">A*</th>
 	
 			</tr>
-			<%@ks2_number.each do |s| %>
+			<%@ks2_score_tm.each do |s| %>
 
 
 				<tr>
-					<td class="title_td"><%=s[0]%></td>
+					<td class="title_td"><p><%=s[0]%></p></td>
 					<%for j in 0..8%>
 						<%n=0%>
 						<%names = Array.new()%>
 							
 								<%for i in 0..d.length-1%>
 									<%if d[i]['grade'] && d[i]['ks2']%>
-										<%if d[i]['grade']==j && d[i]['ks2']==s[1]%>
-											<p class="tm_text">
+										<%if d[i]['grade'].to_i==j && d[i]['ks2']==s[1]%>
 												<%names << d[i]['surname'].to_s + ' ' + d[i]['forename'].to_s %>
-											</p>
 											<%n+=1%>
 								
 										<%end%>
@@ -55,18 +53,11 @@
 							<%else%>
 								<td class="below">
 							<%end%>
-							<div class="row ">
-								<div class="col-md-12" style="font-size:9px;">
-							
-									<%for h in 0..names.length-1%>
-										<%=names[h]+"  "%>
-								
-										
-										<%end%>
-						
-								
-								</div>
-							</div>				
+							<p class="tm_matrix_text">
+								<%for h in 0..names.length-1%>
+									<%=names[h]+"  "%>	
+								<%end%>	
+							</p>
 						</td>
 						<%k+=1%>
 					<%end%>

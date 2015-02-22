@@ -1,80 +1,89 @@
-	<div class="page">
-		<p class="qual_title">Subject Overview</p>
+	<%data_count = data.count%>
+	<%page_count = data_count/20%>
+	<%for i in 0..page_count%>	
+		<div class="page">
+	
+			<p class="qual_title">Subject Overview</p>
 		
-		<table class="table">
-			<tr>
-				<th>Qualification</th>
-				<th class="text-center">APS</th>
-				<th class="text-center">LP</th>
-				<th class="text-center">VA</th>
+			<table class="table">
+				<tr>
+					<th>Qualification</th>
+					<th class="text-center">APS</th>
+					<th class="text-center">LP</th>
+					<th class="text-center">VA</th>
 				
-			</tr>
-		<%va_array = []%>
-		<%data.each do |s|%>
+				</tr>
+			<%va_array = []%>
+			<%data.drop(20*i).first(20).each do |s|%>
 			
-			<%ci = 1.96 * 1.14/ Math.sqrt(s[:num_pupils])%>
-			<%va_hash = {:title => s[:name], :va =>s[:va], :up_va =>(s[:va].to_f + ci), :lo_va =>(s[:va].to_f - ci) }%>
-			<%va_array << va_hash%>
-			<tr>
-				<td><%=s[:name]%></td>
-				<td><div class='numberCircle <%=color_div_ps(s[:ps])%>'><%=s[:ps].round(1)%></div></td>
-				<td><div class='numberCircle <%=color_div_lp(s[:lp])%>'><%=s[:lp].round(1)%></div></td>
-				<td><div class='numberCircle <%=color_div_va(s[:va])%>'><%=s[:va].round(1)%></div></td>
-			<tr>
-		<%end%>
-		</table>
-		<%=render 'footer', {:p =>p}=%>
-		<%p+=1%>
-	</div>
+				<%ci = 1.96 * 1.14/ Math.sqrt(s[:num_pupils])%>
+				<%va_hash = {:title => s[:name], :va =>s[:va], :up_va =>(s[:va].to_f + ci), :lo_va =>(s[:va].to_f - ci) }%>
+				<%va_array << va_hash%>
+				<tr>
+					<td><%=s[:name]%></td>
+					<td><div class='numberCircle <%=color_div_ps(s[:ps])%>'><%=s[:ps].round(1)%></div></td>
+					<td><div class='numberCircle <%=color_div_lp(s[:lp])%>'><%=s[:lp].round(1)%></div></td>
+					<td><div class='numberCircle <%=color_div_va(s[:va])%>'><%=s[:va].round(1)%></div></td>
+				<tr>
+			<%end%>
+			</table>
+			<%p+=1%>
+		</div>
+	<%end%>
 	<div class="page">
+		
 		<p class="qual_title">Progress 8 Score By Subject</p>
 		<%=render 'va_chart_subject', {:data => va_array, :va_count => 1}%>
-		<%=render 'footer', {:p =>p}=%>
 		<%p+=1%>
 	</div>
 	<div class="page">
+		
 		<p class="qual_title">Subject Overview</p>
 		<p class="class_title">Levels of Progress by Subject</p>
-		<div style="width: 900px; height: 600px;" id='lp_overview_chart'></div>	
+		<div style="width: 820px; height: 570px;" id='lp_overview_chart'></div>	
 		<p class="class_title">Progress 8 Score by Subject</p>
-		<div style="width: 900px; height: 600px;" id='va_overview_chart'></div>	
-		<%=render 'footer', {:p =>p}=%>
+		<div style="width: 820px; height: 570px;" id='va_overview_chart'></div>	
 		<%p+=1%>
 	</div>
 	<div class="page">
+		
 		<p class="qual_title">Subject Overview</p>
 		<p class="class_title">Average Point Score by Subject</p>
-		<div style="width: 900px; height: 600px;" id='ps_overview_chart'></div>	
-		<%=render 'footer', {:p =>p}=%>
+		<div style="width: 820px; height: 600px;" id='ps_overview_chart'></div>	
 		<%p+=1%>
 	</div>
-	<div class="page">
-		<p class="qual_title">Subject Overview - A* - C</p>
-		<table class="table">
-			<tr>
-				<th>Qualification</th>
-				<th class="text-center">A* - G (%)</th>
-				<th class="text-center">A* - C (%)</th>
-				<th class="text-center">A* - A (%)</th>
-			</tr>
-		<%data.each do |s|%>
-			<tr>
-				<td><%=s[:name]%></td>
-				<td>
-				<div class="numberCircle <%=color_class(s[:a_g],'a_g')%>">
-				<%=s[:a_g]%></div></td>
-				<td>
-				<div class="numberCircle <%=color_class(s[:a_c],'a_c')%>">
-				<%=s[:a_c]%></div></td>
-				<td>
-				<div class="numberCircle <%=color_class(s[:a_a],'a_a')%>">
-				<%=s[:a_a]%></div></td>
-			</tr>
-		<%end%>
-		</table>
-		<%=render 'footer', {:p =>p}=%>
-		<%p+=1%>
-	</div>
+	<%=data_count = data.count%>
+	<%=page_count = data_count/20%>
+	<%for i in 0..page_count%>	
+		<div class="page">
+		
+			<p class="qual_title">Subject Overview - A* - C</p>
+			<table class="table">
+				<tr>
+					<th>Qualification</th>
+					<th class="text-center">A* - G (%)</th>
+					<th class="text-center">A* - C (%)</th>
+					<th class="text-center">A* - A (%)</th>
+				</tr>
+			<%data.drop(20*i).first(20).each do |s|%>
+				<tr>
+					<td><%=s[:name]%></td>
+					<td>
+					<div class="numberCircle <%=color_class(s[:a_g],'a_g')%>">
+					<%=s[:a_g]%></div></td>
+					<td>
+					<div class="numberCircle <%=color_class(s[:a_c],'a_c')%>">
+					<%=s[:a_c]%></div></td>
+					<td>
+					<div class="numberCircle <%=color_class(s[:a_a],'a_a')%>">
+					<%=s[:a_a]%></div></td>
+				</tr>
+			<%end%>
+			</table>
+		
+			<%p+=1%>
+		</div>
+	<%end%>
 	
 	
     
@@ -102,7 +111,7 @@
         var options = {
           title: '',
           vAxis: {title: "",  titleTextStyle: {color: 'red'}, textStyle: {fontSize: 12}},
-          chartArea: {  width: "50%", height: "90%", left:450, top:0 },
+          chartArea: {  width: "50%", height: "90%", left:400, top:0 },
            legend: 'none',
           hAxis: {title: 'Levels of Progress',  titleTextStyle: {color: 'grey'}}
         };
@@ -138,7 +147,7 @@
         var options = {
           title: '',
           vAxis: {title: "",  titleTextStyle: {color: 'red'}, textStyle: {fontSize: 12}},
-          chartArea: {  width: "50%", height: "90%", left:450, top:0 },
+          chartArea: {  width: "50%", height: "90%", left:400, top:0 },
            legend: 'none',
           hAxis: {title: 'Progress 8 Score',  titleTextStyle: {color: 'grey'}}
         };
@@ -174,7 +183,7 @@
         var options = {
           title: '',
           vAxis: {title: "",  titleTextStyle: {color: 'red'}, textStyle: {fontSize: 12}},
-          chartArea: {  width: "50%", height: "90%", left:450, top:0 },
+          chartArea: {  width: "50%", height: "90%", left:400, top:20 },
            legend: 'none',
           hAxis: {title: 'Average Point Score',  titleTextStyle: {color: 'grey'}}
         };

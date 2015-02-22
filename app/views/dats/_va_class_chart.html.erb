@@ -13,7 +13,7 @@
 
 		  var data = google.visualization.arrayToDataTable([
 			['Pupil Name', 'Value Added',  { role: 'style' } ],
-			<%va_array.each do |x|%>
+			<%va_array.reverse.each do |x|%>
 			['<%=x[:name]%>', <%=x[:va]%>, '<%=va_bar_color(x[:va])%>'],
 			<%end%>
 

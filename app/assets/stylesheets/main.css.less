@@ -8,21 +8,23 @@ body {
 -webkit-print-color-adjust:exact;
 }
 
-.tm_matrix {
+table.tm_matrix {
 height:820px;
-width:1200px;
-overflow:hidden;
+width:1280px;
+max-height:820px;
+max-width:1200px;
 
-border: 2px solid @gray;
 }
 
 .tm_matrix td {
-border: 1px solid @gray;
-padding:2px;
-width:120px;
-height:41px;
+padding:1px;
+width:128px;
+font-size:9px;
 }
 
+.tm_matrix_text {
+	font-size:8px;
+}
 .cont {
 width:960px;
 overflow:hidden;
@@ -48,6 +50,7 @@ border:1px solid @gray;
 width:958x;
 max-width:958x;
 height:1350px;
+max-height:1350px;
 margin-left:auto;
 margin-right:auto;
 margin-top:20px;
@@ -117,14 +120,14 @@ overflow: hidden;
 
 }
 
-@matrix_td_width: 10.8%;
+
 
 @tm_border: @gray;
 
 .title_td {
 border: 1px solid @tm_border;
 text-align:center;
-font-size:15px;
+font-size:10px;
 
 }
 
@@ -249,8 +252,8 @@ font-size:14px;
 }
 
 .black_color {
-border:0px solid #000;
-	background-color:#000;
+border:0px solid #777;
+	background-color:#777;
 	color: #fff;
 
 }

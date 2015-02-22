@@ -9,14 +9,14 @@ width:700px;
 
 <div class="cont">
 	
-	<%count_pages = @students.count/34%>
+	<%count_pages = @students.count/33%>
 	<%for i in 0..count_pages%>
 		<div class="page">
+			
 			<h3>Progress 8 - All Pupils</h3>
 			<hr>
 			<h4><%=count_pages >1 ? 'Page '+(i+1).to_s : ''%></h4>
-			<p>A list of all pupils with their respective Progress 8 scores ranked in ascending order. Designed to provide an overview of where imediate action should be taken and which 
-			subject areas should be the principle focus.</p>
+			<p></p>
 			<table class="student_list_table">
 				<tr>
 					<th style="width:100px">Surname</th>
@@ -33,7 +33,7 @@ width:700px;
 					<th style="width:70px">A8</th>
 					<th style="width:70px">P8</th>
 				</tr>
-				<%@students.sort_by { |h| h['Progress 8'].to_i }.drop(33*i).first(33).each do |student|%>
+				<%@students.sort_by { |h| h['Progress 8'].to_i }.drop(32*i).first(32).each do |student|%>
 					<%school_overview_hash = {}%>
 					<tr>
 						<td><%=student['Surname']%></td>
@@ -48,8 +48,9 @@ width:700px;
 								<div class="numberCircle <%=color_div_total(student['Maths_Points_Score'],student['Expected Attainment 8'],'Maths_Points_Score')%>"><%=school_overview_hash[:ma] = student['Maths_Points_Score']%></div>
 							</div>
 							<div class="col-xs-6">
-								<%if student['Maths_Points_Score']>0%>
-									<i class="fa fa-check-circle"></i>
+								
+								<%if !student['Maths_Points_Score'].blank?%>
+									<i class="fa fa-check-circle" style="font-size:15px;"></i>
 								<%end%>
 							</div>		
 						</td>
@@ -59,7 +60,7 @@ width:700px;
 							</div>
 							<div class="col-xs-6">
 								<%if !student['English_Literature_Points_Score'].blank? && !student['English_Points_Score'].blank?%>
-									<i class="fa fa-check-circle"></i>
+									<i class="fa fa-check-circle" style="font-size:15px;"></i>
 								<%end%>
 							</div>
 						</td>
@@ -79,6 +80,7 @@ width:700px;
 	<%count_eng_lit_pages = no_e_lit_arr.count/34%>
 	<%for i in 0..count_eng_lit_pages%>
 		<div class="page">
+			
 			<h3>Pupils with no English Literature</h3>
 			<hr>
 			<p>These pupils have been identified as having no English Literature Score. The new scores are based on the pupils taking English Literature and therefore
@@ -121,7 +123,8 @@ width:700px;
 			</table>
 		</div>
 	<%end%>
-	<div class="page">
+	<div class="page">	
+	
 	<h3>School Summary Page</h3>
 	<hr>
 		<h4>School Averages</h4>
@@ -137,15 +140,6 @@ width:700px;
 			</div>
 		</div>
 		<h4>Statistical Significance</h4>
-		<p>The statisitcal significance is calculated using the standard deviation of the Progress 8 scores for all eligible pupils nationally. The value that has been used to 
-		calculate the significance in this case has been taken from the example provided in the technical guide issued by the DFE. This will evidently change year on year therefore the significance 
-		calculation can not be guaranteed for any particular year.</p>
-		<ul>
-			<li>A Progress 8 score where the lower-bound is above 0 is considered to be significantly above average. </li>
-			<li>A Progress 8 score where the upper-bound is below 0 is considered to be significantly below average. </li>
-			<li>A Progress 8 score where the lower-bound and upper-bound straddle 0 is considered to be not significanct. </li>
-			<li>A whole school Progress 8 score of less than -0.5 will be considered to be below the floor standard and will therefore lead to an inspection. </li>
-		</ul>
 		<div class="row text-center" style="margin-top:20px;">
 			<div class="col-xs-12">
 				<h4>Progress 8 measure for all pupil groups</h4>

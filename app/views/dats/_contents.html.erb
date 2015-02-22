@@ -1,23 +1,23 @@
 <div class="page">
 	<p class="qual_title">Contents</p>
 	<hr>
-	<%pg = 8%>
+	<%pg = 10%>
 	<table class="contents_table">
 		<tr>
 			<td>Key Information</td>
-			<td>1</td>
+			<td>3</td>
 		</tr>
 		<%@subject_titles.each do |s|%>
 			 <tr>
-				<td><%=s.gsub(/-/, ' ')%></td>
+				<td><%=s.gsub(/-/, ' ').upcase%></td>
 				<td><%=pg%></td>
 			 </tr>
 		
 				<%@students.map { |x| x[s+'_Class'].upcase }.uniq.reject(&:empty?).sort.each do |c|%>
 					<%pg+=5%>
 				<%end%>
-				<%lp_count = @students.map { |x| x[s+' Levels of Progress'] }.reject(&:blank?).select { |v| v < 3}.count/31%>
-				<%va_count = @students.map { |x| x[s+' Value Added'] }.reject(&:blank?).select { |v| v < 0}.count/31%>
+				<%lp_count = @students.map { |x| x[s+' Levels of Progress'] }.reject(&:blank?).select { |v| v < 3}.count/30%>
+				<%va_count = @students.map { |x| x[s+' Value Added'] }.reject(&:blank?).select { |v| v < 0}.count/30%>
 				<%pg+=6 + lp_count + va_count%>
 		<%end%>
 		

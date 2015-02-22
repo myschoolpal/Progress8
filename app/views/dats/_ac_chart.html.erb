@@ -41,15 +41,21 @@
 				</td>
 				<td>
 					<%=grade_array.count{|x| x > 0 }%>
-					<%@a_g_percentage = 100*grade_array.count{|x| x > 0 }/d.length%>
+					<%if d.length>0%>
+						<%@a_g_percentage = 100*grade_array.count{|x| x > 0 }/d.length%>
+					<%end%>
 				</td>
 				<td>
 					<%=grade_array.count{|x| x > 4 }%>
-					<%@a_c_percentage = 100*grade_array.count{|x| x > 4 }/d.length%>
+					<%if d.length>0%>
+						<%@a_c_percentage = 100*grade_array.count{|x| x > 4 }/d.length%>
+					<%end%>
 				</td>
 				<td>
 					<%=grade_array.count{|x| x > 6 }%>
-					<%@a_a_percentage = 100*grade_array.count{|x| x > 6 }/d.length%>
+					<%if d.length>0%>	
+						<%@a_a_percentage = 100*grade_array.count{|x| x > 6 }/d.length%>
+					<%end%>
 				</td>		
 			</tr>
 			<tr>
@@ -79,7 +85,7 @@
 
         var data = google.visualization.arrayToDataTable([
           ['Label', 'Value'],
-          ['A* - G', <%=100*grade_array.count{|x| x > 0 }/d.length%>]
+          ['A* - G', <%=@a_g_percentage%>]
           
         ]);
 
@@ -107,7 +113,7 @@
         var data = google.visualization.arrayToDataTable([
           ['Label', 'Value'],
           
-          ['A* - C', <%=100*grade_array.count{|x| x > 4 }/d.length%>]
+          ['A* - C', <%=@a_c_percentage%>]
         ]);
 
         var options = {
@@ -133,7 +139,7 @@
         var data = google.visualization.arrayToDataTable([
           ['Label', 'Value'],
           
-          ['A* - A', <%=100*grade_array.count{|x| x > 6 }/d.length%>]
+          ['A* - A', <%=@a_a_percentage%>]
         ]);
 
         var options = {

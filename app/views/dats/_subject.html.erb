@@ -6,20 +6,21 @@
 	<%=render 'contents'%>
 	<%=render 'content_description'%>
 	
-	<div class="">
+	<div class="hidden">
 	<%subject_overall_data=[]%>
 	<%@subject_titles.each do |s|%>
 		<%=render 'subject_page', {:subject => s}%>
-		<%=p%>
+		
 				<%p+=1%>
 		<%subject_summary_hash ={}%>
 		<%classes = @students.map { |x| x[s+'_Class'].upcase }.uniq.reject(&:empty?).sort%>
-		<%qualification_title =s.gsub(/-/, ' ')%>
+		<%qualification_title =s.gsub(/-/, ' ').upcase%>
 		<br />
 		<%subject_data= []%>
 		<%classes.each do |class_name| %>
 			<%d = []%>
 			<div class="page">
+				
 				<h3><%=qualification_title%></h3>
 				<h4><strong>Class: </strong><%=class_name.upcase%></h4>
 				<hr>
@@ -29,7 +30,7 @@
 								<th class="text-center"><%=disp%></th>
 						<%end%>
 					</tr>
-				<%@students.select {|arr| arr[s+'_Class'].upcase == class_name.upcase && !arr[s].blank?}.each do |student|%>
+				<%@students.select {|arr| arr[s+'_Class'].upcase == class_name.upcase && !arr[s].blank?}.sort_by { |hsh| hsh["Surname"] }.each do |student|%>
 						<tr>
 							<td><%=student['Surname']%></td>
 							<td><%=student['Forename']%></td>
@@ -37,35 +38,51 @@
 							<td><%=check_group(student['SEN'])%></td>
 							<td><%=check_group(student['EAL'])%></td>
 							<td><%=student['Expected Attainment 8'].to_f/10.round(1)%></td>
-							<td><div class="numberCircle <%=color_class(student['English_KS2_grade'][0].to_i,'ks2')%>"><%=student['English_KS2_grade'].upcase%></div></td>
-							<td><div class="numberCircle <%=color_class(student['Maths_KS2_grade'][0].to_i,'ks2')%>"><%=student['Maths_KS2_grade'].upcase%></div></td>
-							<td><div class="numberCircle <%=color_class(student['Average KS2'][0].to_i,'ks2')%>"><%=student['Average KS2']%></div></td>
+							<td>
+								<%if !student['English_KS2_grade'].blank?%>
+									<div class="numberCircle <%=color_class(student['English_KS2_grade'].to_i,'ks2')%>"><%=student['English_KS2_grade'].upcase%></div>
+								<%end%>
+							</td>
+							<td>
+								<%if !student['Maths_KS2_grade'].blank?%>
+									<div class="numberCircle <%=color_class(student['Maths_KS2_grade'].to_i,'ks2')%>"><%=student['Maths_KS2_grade'].upcase%></div>
+								<%end%>
+							</td>
+							<td>
+								<%if !student['Average KS2'].blank?%>
+									<div class="numberCircle <%=color_class(student['Average KS2'].to_i,'ks2')%>"><%=student['Average KS2']%></div>
+								<%end%>
+							</td>
 							<td><%=student[s]%></td>
 							<td><%=student[s+' Points Score']%></td>
 							<td class="<%=color_class(student[s+' Levels of Progress'],'lp')%>"><%=student[s+' Levels of Progress']%></td>
 							<td class="<%=color_class(student[s+' Value Added'],'va')%>"><%=student[s+' Value Added']%></td>
 						</tr>
 						<%ks2 = choose_ks2_measure(s,student['English_KS2_grade'],student['Maths_KS2_grade'],student['Average KS2'])%>
-						<%a = {"surname"=>student['Surname'], "forename"=>student['Forename'], "ks2"=>ks2, "grade"=>student[s+' Points Score'], "lp"=>student[s+' Levels of Progress'], "va"=>student[s+' Value Added']}%>
+						<%a = {"surname"=>student['Surname'], "forename"=>student['Forename'], "ks2"=>ks2, "classname" => student[s+'_Class'],  "grade"=>student[s+' Points Score'], "lp"=>student[s+' Levels of Progress'], "va"=>student[s+' Value Added']}%>
 						<%d<<a%>
 						<%subject_data<<a%>
 				<%end%>
 				</table>
-				<%=p%>
+				
 				<%p+=1%>
 			</div>
 			<div class="page">
-			
-				<h3>Summary Statistics - <%=class_name.upcase%></h3>
+				<h3>
+				
+				Summary Statistics - <%=class_name.upcase%></h3>
 				<hr>
 				<%=draw_summary_table(class_name,s,@students)%>
 				<hr>	 
 					<%=render 'lp_piechart', {:d => d, :n =>n }%>
-					<%=p%>
+					
 				<%p+=1%>
 			</div>
 			<div class="page">
-				<h3>Summary Statistics - <%=class_name.upcase%></h3>
+				
+				<h3>
+				
+				Summary Statistics - <%=class_name.upcase%></h3>
 				<hr>
 					<%=render 'smid_lp_chart', {:d => d, :n =>n }%>
 				<hr>
@@ -76,11 +93,14 @@
 				</div>
 				<hr>
 				
-				<%=p%>
+				
 				<%p+=1%>
 			</div>
 			<div class="page">
-				<h3>Summary Statistics - <%=class_name.upcase%></h3>
+				<h3>
+				
+				Summary Statistics - <%=class_name.upcase%></h3>
+				
 				<hr>
 				<div class="row">
 					<div class="col-xs-12">
@@ -90,27 +110,35 @@
 				<hr>
 				<h3>Progress 8 score per pupil - <%=class_name.upcase%></h3>
 				<%=render 'va_class_chart', {:d =>d, :n=>n}=%>
-				<%=p%>
+				
 				<%p+=1%>
 			</div>
 				<%n+=1%>
 			<div class="page">
-				
+				<h3>Transition Matrix - <%=class_name.upcase%> </h3>
+				<hr>
 				<%=render 'tmatrix', :d => d%>
-				<%=p%>
+				
 				<%p+=1%>
 			</div>
 		<%end%>
 		<div class="page">
-			<h3>Summary Statistics - <%=s.gsub(/-/, ' ')%></h3>
+		
+			<h3>
+			
+			Summary Statistics - <%=qualification_title%></h3>
+				
 			<hr>
 			<%=draw_summary_table('subject',s,@students)%>
 			<%=render 'lp_piechart', {:d => subject_data, :n =>n }%>
-			<%=p%>
+			
 				<%p+=1%>
 		</div>
 		<div class="page">
-			<h3>Summary Statistics - <%=s.gsub(/-/, ' ')%></h3>
+			
+			<h3>
+			
+			Summary Statistics - <%=qualification_title%></h3>
 			<hr>
 			<div class="row">
 				<div class="col-xs-12">
@@ -123,24 +151,30 @@
 					<%=render 'mini_tmatrix', {:d =>subject_data, :n =>n}%>
 				</div>
 			</div>
-			<%=p%>
+			
 				<%p+=1%>
 		</div>
 		<div class="page">
-			<h3>Summary Statistics - <%=s.gsub(/-/, ' ')%></h3>
+			
+			<h3>
+			
+			Summary Statistics - <%=qualification_title%></h3>
 			<hr>
 			<div class="row">
 				<div class="col-xs-12">
 					<%=render 'ac_chart', {:d =>subject_data, :n=>n}=%>
 				</div>
 			</div>
-			<%=p%>
+			
 				
 				<%p+=1%>
 		 </div>
 			<%lp = calculate_average_from_hash('subject', s, 'all', @students, 'lp')%>
 			<%sub_va = calculate_average_from_hash('subject', s, 'all', @students, 'va')%>
 			<%sub_ps = calculate_average_from_hash('subject', s, 'all', @students, 'ps')%>
+			<%lp ? "": lp = 0 %>
+			<%sub_ps ? "": sub_ps = 0 %>
+			<%sub_va ? "": sub_va = 0 %>
 			<%subject_summary_hash = {:name => qualification_title, :lp => lp, :va => sub_va, :ps => sub_ps, :a_g => @a_g_percentage,
 			 :a_c => @a_c_percentage, :a_a => @a_a_percentage, :num_pupils => number_of_pupils(s, @students)}%>
 			<%subject_overall_data << subject_summary_hash%>
@@ -159,7 +193,7 @@
 				<%end%>
 			<%end%>
 			
-			<%lp_count_pages = below_lp.count/31%>
+			<%lp_count_pages = below_lp.count/30%>
 			<%for i in 0..lp_count_pages%>
 				<div class="page">
 					<h3>LP Key Pupils - <%=qualification_title%></h3>
@@ -172,6 +206,7 @@
 								<tr>
 									<th>Surname</th>
 									<th>Forename</th>
+									<th>Class</th>
 									<th>KS2</th>
 									<th>Point Score</th>
 									<th>Levels of Progress</th>
@@ -180,8 +215,9 @@
 								<tr>
 									<td><%=pupil['surname']%></td>
 									<td><%=pupil['forename']%></td>
+									<td><%=pupil['classname']%></td>
 									<td><%=@ks2_number.key(pupil['ks2'])%></td>
-									<td><%=pupil['grade']%> </td>
+									<td><%=pupil['grade']%> (<%=@grade_score.key(pupil['grade'])%>)</td>
 									<td class='<%=color_div_lp(pupil['lp'])%>'><%=pupil['lp']%></td>
 								</tr>
 							<%end%>
@@ -189,7 +225,7 @@
 						<%else%>
 							<h5>There are no pupils making less than 3 levels of progress in this subject.</h5>
 						<%end%>
-						<%=p%>
+						
 						<%p+=1%>
 				</div>
 			<%end%>
@@ -206,14 +242,16 @@
 								<tr>
 									<th>Surname</th>
 									<th>Forename</th>
+									<th>Class</th>
 									<th>KS2</th>
 									<th>Point Score</th>
-									<th>Value Added Score</th>
+									<th>Progress Score</th>
 								</tr>
 							<%below_va.sort_by { |h| h['va'] }.drop(30*i).first(30).each do |pupil|%>  
 								<tr>
 									<td><%=pupil['surname']%></td>
 									<td><%=pupil['forename']%></td>
+									<td><%=pupil['classname']%></td>
 									<td><%=@ks2_number.key(pupil['ks2'])%></td>
 									<td><%=pupil['grade']%> (<%=@grade_score.key(pupil['grade'])%>)</td>
 									<td class='<%=color_div_va(pupil['va'])%>'><%=pupil['va']%></td>
@@ -221,9 +259,9 @@
 							<%end%>
 							</table>
 						<%else%>
-							<h5>There are no pupils with a Value Added Score of 0 or less in this subject.</h5>
+							<h5>There are no pupils with a Progress 8 Score of 0 or less in this subject.</h5>
 						<%end%>
-						<%=p%>
+						
 						<%p+=1%>
 				</div>
 			<%end%>

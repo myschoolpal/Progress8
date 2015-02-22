@@ -1,160 +1,47 @@
 <style>
-.top_bar {
-margin:0px;
-padding:0px;
-height:100px;
-width:100%;
-padding-left:1px;
+
+.frontSMLogo {
+height:70px;
+margin-top:20px;
+margin-right:40px;
 }
-.bar_chart_design{
-width:77px;
-}
-.top_bar .col-xs-1 {
-padding:0px;
-}
-.logo_area {
-	margin-top:100px;
-	height:150px;
-}
-p.logo {
-font-size:90px;
-}
-.first_letter_logo {
-	
-}
-.front_page .main_heading {
- margin-top:20px;
- padding:40px;
- font-size:50px;
- color:#333;
- height:230px;
-}
-.front_page .main_text {
- margin-top:200px;
- padding-left:40px;
- background-color:#fff;
- height:525px;
+
+.frontSMIDLogo {
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:300px;
 }
 
 
-
-.front_page .main_list {
-margin-left:40px;
-font-size:20px;
+.front_school_name {
+	margin-top:300px;
+	margin-left:90px;
+}
+.frontQuote {
+margin-top:170px;
+margin-right:30px;
 }
 
-.front_page .main_list .list_item {
-
-margin-top:30px;
+.quote_marks {
+font-size:50px;
+margin-right:20px;
 }
-.front_page .text_block {
-margin-top:80px;
-}
-.front_page_graph {
-	height:250px;
-	border:1px solid #888888;
-	border-radius:20px;
-	position:relative;
-	top:-100px;
-	left:10px;
-	box-shadow: 10px 10px 5px #888888;
-	float:right;
-}
-
-.text_section {
-padding-top:30px;
-position:relative;
-float:top;
-
-}
-.text_column {
-padding-left:0px;
-padding-right:60px;
-}
-.base_text {
-width:100%;
-padding-right:40px;
-margin-top:175px;
-
-}
-
-
 
 </style>
 <div class="front_page">
-	<div class="top_bar hidden">
-		<div class="col-xs-1">
-			<div class="bar_chart_design on_track_color" style="height:70px;"></div>
-		</div>
-		<div class="col-xs-1">
-			<div class="bar_chart_design above_color" style="height:90px;"></div>
-		</div>
-		<div class="col-xs-1">
-			<div class="bar_chart_design below_color" style="height:30px;"></div>
-		</div>
-		<div class="col-xs-1">
-			<div class="bar_chart_design one_below_color" style="height:50px;"></div>
-		</div>
-		<div class="col-xs-1">
-			<div class="bar_chart_design above_color" style="height:80px;"></div>
-		</div>
-		<div class="col-xs-1">
-			<div class="bar_chart_design on_track_color" style="height:65px;"></div>
-		</div>
-		<div class="col-xs-1">
-			<div class="bar_chart_design above_color" style="height:85px;"></div>
-		</div>
-		<div class="col-xs-1">
-			<div class="bar_chart_design one_below_color" style="height:45px;"></div>
-		</div>
-		<div class="col-xs-1">
-			<div class="bar_chart_design on_track_color" style="height:60px;"></div>
-		</div>
-		<div class="col-xs-1">
-			<div class="bar_chart_design below_color" style="height:35px;"></div>
-		</div>
-		<div class="col-xs-1">
-			<div class="bar_chart_design on_track_color" style="height:70px;"></div>
-		</div>
-		<div class="col-xs-1">
-			<div class="bar_chart_design above_color" style="height:80px;"></div>
-		</div>
+	<div class="text-right">
+			<%=image_tag("logo_red.png", class: 'frontSMLogo')%>
 	</div>
-	<div class="logo_area">
-		<div class="col-xs-6 col-xs-offset-6 text-center">
-			<%=image_tag("logo_red.png")%>
-		</div>
+	<div class="row text-center">
+		<%=image_tag("smidLogo.png", class: 'frontSMIDLogo')%>
 	</div>
-	<div class="main_heading">
-		SMID Report - Example Secondary School
-		<br />
-		<small>December 2014</small>
+	<div class="front_school_name">
+		<h1>Bennetthorpe Academy</h1>
+		<h1>February 2015</h1>
 	</div>
-	<div class="main_text">
-		
-		<div class="row text_section">
-			
-			<div class="col-xs-6">
-				
-				<ul class="list-unstyled main_list">
-					<li class="list_item"><i class='fa fa-chevron-circle-right'></i> Progress 8</li>
-					<li class="list_item"><i class='fa fa-chevron-circle-right'></i> Attainmant 8</li>
-					<li class="list_item"><i class='fa fa-chevron-circle-right'></i> Levels of Progress</li>
-					<li class="list_item"><i class='fa fa-chevron-circle-right'></i> Transition Matrices</li>
-					<li class="list_item"><i class='fa fa-chevron-circle-right'></i> PP, SEN &amp; EAL</li>
-					<li class="list_item"><i class='fa fa-chevron-circle-right'></i> Intervention Identified</li>
-				</ul>
-					
-			 </div>
-			<div class="col-xs-6 text_column"><%=image_tag("pie_chart.png", class: "front_page_graph")%>
-				
-			</div>
-			
-		</div>
-			<div class="base_text text-right">
-			
-				
-			</div>
+	
+	<div class="frontQuote text-right">
+		<h2><i class="fa fa-quote-left quote_marks"></i><i>A consistent approach to tackling in year data...</i></h2>
 	</div>
 </div>
 

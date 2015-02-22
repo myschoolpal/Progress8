@@ -25,7 +25,7 @@
 </div>
 
 
-
+<%graph_points =[]%>
 
      <script type="text/javascript">
       google.setOnLoadCallback(drawChart);
@@ -35,7 +35,8 @@
           [-5, 0],
           <%(0..12).step(3) do |i|%>
           	
-			[<%=i-2%>, <%=lp_count[i,i+2].sma%>],
+			[<%=i-2%>, <%=point = lp_count[i,i+2].sma%>],
+			<%graph_points.push(point)%>
 		<%end%>
         ]);
 
@@ -45,7 +46,7 @@
           hAxis: {title: 'Levels of Progress', minValue: -5, maxValue: 9, viewWindow: {
                     min: -5
                 }},
-          vAxis: {title: 'SMID Weighting'},
+          vAxis: {title: 'SMID Weighting',maxValue: <%=graph_points.max+1%>},
           legend: 'none',
           trendlines: {
       0: {
